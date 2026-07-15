@@ -6,7 +6,7 @@
   "googleReviewUrl": "https://search.google.com/local/writereview?placeid=ChIJh2gkJE-vKIQRVrVIWl4GR2E",
   "ownerWhatsapp": "+523331954765",
   "socials": {
-    "instagram": "https://instagram.com/klei.barberia",
+    "instagram": "https://www.instagram.com/kleibarber25/",
     "whatsapp": "https://wa.me/523331954765"
   },
   "buttons": [
@@ -19,9 +19,9 @@
     },
     {
       "label": "Agendar cita",
-      "subtitle": "Reserva tu corte por WhatsApp",
+      "subtitle": "Reserva tu corte en línea",
       "icon": "calendar",
-      "url": "https://wa.me/523331954765?text=Quiero%20agendar%20una%20cita"
+      "url": "https://kleibarber.pages.dev/"
     },
     {
       "label": "Ubicación",
@@ -30,10 +30,16 @@
       "url": "https://maps.app.goo.gl/F1eNF9ni5t1L9byi8"
     },
     {
-      "label": "Instagram",
+      "label": "Instagram del negocio",
       "subtitle": "Nuestro trabajo",
       "icon": "camera",
-      "url": "https://instagram.com/klei.barberia"
+      "url": "https://www.instagram.com/kleibarber25/"
+    },
+    {
+      "label": "Instagram del barbero",
+      "subtitle": "Sígueme por acá",
+      "icon": "camera",
+      "url": "https://www.instagram.com/kleiver327/"
     }
   ]
 }
