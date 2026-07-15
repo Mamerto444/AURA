@@ -4,7 +4,7 @@ const SOCIAL_ICON_BY_KEY = {
   instagram: 'camera',
   tiktok: 'music',
   whatsapp: 'chat',
-  facebook: 'globe',
+  facebook: 'facebook',
   web: 'globe',
 };
 

@@ -1,21 +1,22 @@
 {
+  "_note": "Demo de venta para Starbucks. googleReviewUrl y ownerWhatsapp son placeholders porque dependen de la sucursal específica (cada tienda tiene su propio Place ID de Google y contacto de gerencia) — se completan al cerrar con una tienda en concreto.",
   "name": "Starbucks",
   "tagline": "Tu momento. Tu café.",
   "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/d/d3/Starbucks_Corporation_Logo_2011.svg/200px-Starbucks_Corporation_Logo_2011.svg.png",
-  "heroImage": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=800&q=80",
+  "heroImage": "https://images.unsplash.com/photo-1754711596581-f19183b06b15?fm=jpg&q=80&w=1200&auto=format&fit=crop",
   "accentColor": "#00704A",
-  "googleReviewUrl": "https://search.google.com/local/writereview?placeid=PLACE_ID_AQUI",
+  "googleReviewUrl": "https://search.google.com/local/writereview?placeid=PLACE_ID_DE_LA_SUCURSAL",
   "ownerWhatsapp": "+52XXXXXXXXXX",
   "gallery": [
-    "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&q=80",
-    "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&q=80",
-    "https://images.unsplash.com/photo-1504630083234-14187a9df0f5?w=400&q=80",
-    "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=400&q=80"
+    "https://images.unsplash.com/photo-1637290742802-3c8a0f5bd49b?fm=jpg&q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1528732263440-4dd1a18a4cc2?fm=jpg&q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1612994503408-1749e15638b4?fm=jpg&q=80&w=500&auto=format&fit=crop"
   ],
   "socials": {
-    "instagram": "https://instagram.com/starbucks",
-    "facebook": "https://facebook.com/starbucks",
-    "web": "https://starbucks.com.mx"
+    "instagram": "https://www.instagram.com/starbucksmex/",
+    "facebook": "https://www.facebook.com/StarbucksMexico/",
+    "tiktok": "https://www.tiktok.com/@starbucksmexico",
+    "web": "https://www.starbucks.com.mx/"
   },
   "buttons": [
     {
@@ -34,14 +35,14 @@
     {
       "label": "Recompensas Starbucks",
       "subtitle": "Acumula estrellas con cada compra",
-      "icon": "star",
-      "url": "https://www.starbucks.com.mx/rewards"
+      "icon": "gift",
+      "url": "https://rewards.starbucks.mx"
     },
     {
-      "label": "Cómo llegar",
-      "subtitle": "Ver en Google Maps",
+      "label": "Encuentra tu tienda",
+      "subtitle": "Ubica la sucursal más cercana",
       "icon": "map-pin",
-      "url": "https://maps.app.goo.gl/PLACEHOLDER"
+      "url": "https://www.starbucks.com.mx/stores"
     }
   ]
 }
