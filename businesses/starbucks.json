@@ -1,0 +1,47 @@
+{
+  "name": "Starbucks",
+  "tagline": "Tu momento. Tu café.",
+  "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/d/d3/Starbucks_Corporation_Logo_2011.svg/200px-Starbucks_Corporation_Logo_2011.svg.png",
+  "heroImage": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=800&q=80",
+  "accentColor": "#00704A",
+  "googleReviewUrl": "https://search.google.com/local/writereview?placeid=PLACE_ID_AQUI",
+  "ownerWhatsapp": "+52XXXXXXXXXX",
+  "gallery": [
+    "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&q=80",
+    "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&q=80",
+    "https://images.unsplash.com/photo-1504630083234-14187a9df0f5?w=400&q=80",
+    "https://images.unsplash.com/photo-1511920170033-f8396924c348?w=400&q=80"
+  ],
+  "socials": {
+    "instagram": "https://instagram.com/starbucks",
+    "facebook": "https://facebook.com/starbucks",
+    "web": "https://starbucks.com.mx"
+  },
+  "buttons": [
+    {
+      "label": "Dejar una reseña",
+      "subtitle": "Cuéntanos cómo fue tu visita",
+      "icon": "star",
+      "url": "/review/starbucks",
+      "highlight": true
+    },
+    {
+      "label": "Ver menú",
+      "subtitle": "Bebidas, alimentos y más",
+      "icon": "link",
+      "url": "https://www.starbucks.com.mx/menu"
+    },
+    {
+      "label": "Recompensas Starbucks",
+      "subtitle": "Acumula estrellas con cada compra",
+      "icon": "star",
+      "url": "https://www.starbucks.com.mx/rewards"
+    },
+    {
+      "label": "Cómo llegar",
+      "subtitle": "Ver en Google Maps",
+      "icon": "map-pin",
+      "url": "https://maps.app.goo.gl/PLACEHOLDER"
+    }
+  ]
+}
