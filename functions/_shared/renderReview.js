@@ -117,6 +117,7 @@ export function renderReview(business, slug) {
   var GOOGLE_URL = ${toScriptSafeJson(googleUrl)};
   var OWNER_PHONE = ${toScriptSafeJson(ownerPhone)};
   var BUSINESS_NAME = ${toScriptSafeJson(business.name)};
+  var SLUG = ${toScriptSafeJson(slug)};
 
   var stars = Array.prototype.slice.call(document.querySelectorAll('.star-btn'));
   var positive = document.getElementById('positive-branch');
@@ -134,6 +135,7 @@ export function renderReview(business, slug) {
       });
 
       if (value >= 4) {
+        navigator.sendBeacon('/track/' + SLUG + '?type=positive');
         negative.hidden = true;
         positive.hidden = false;
         if (GOOGLE_URL) {
@@ -141,6 +143,7 @@ export function renderReview(business, slug) {
           setTimeout(function () { window.location.href = GOOGLE_URL; }, 900);
         }
       } else {
+        navigator.sendBeacon('/track/' + SLUG + '?type=negative');
         positive.hidden = true;
         negative.hidden = false;
         var message = 'Hola, tuve una experiencia de ' + value + ' estrella(s) en ' + BUSINESS_NAME + ' y quisiera platicarlo.';

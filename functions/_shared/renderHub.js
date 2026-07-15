@@ -266,7 +266,7 @@ export function renderHub(business) {
   <div class="buttons">
     ${buttonsHtml}
   </div>
-  <footer><a href="https://flowpages.pages.dev" target="_blank" rel="noopener">Hecho con FlowPages</a></footer>
+  <footer><a href="/" target="_blank" rel="noopener">Hecho con AURA</a></footer>
 </main>
 </body>
 </html>`;
