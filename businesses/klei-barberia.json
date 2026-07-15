@@ -1,13 +1,13 @@
 {
   "name": "Klei Barbería",
   "tagline": "Cortes de autor en el centro de la ciudad",
-  "logo": "",
+  "logo": "/assets/klei-barberia/logo.png",
   "accentColor": "#D4A056",
-  "googleReviewUrl": "https://search.google.com/local/writereview?placeid=PLACE_ID_AQUI",
-  "ownerWhatsapp": "+52XXXXXXXXXX",
+  "googleReviewUrl": "https://search.google.com/local/writereview?placeid=ChIJh2gkJE-vKIQRVrVIWl4GR2E",
+  "ownerWhatsapp": "+523331954765",
   "socials": {
     "instagram": "https://instagram.com/klei.barberia",
-    "whatsapp": "https://wa.me/52XXXXXXXXXX"
+    "whatsapp": "https://wa.me/523331954765"
   },
   "buttons": [
     {
@@ -21,13 +21,13 @@
       "label": "Agendar cita",
       "subtitle": "Reserva tu corte por WhatsApp",
       "icon": "calendar",
-      "url": "https://wa.me/52XXXXXXXXXX?text=Quiero%20agendar%20una%20cita"
+      "url": "https://wa.me/523331954765?text=Quiero%20agendar%20una%20cita"
     },
     {
       "label": "Ubicación",
       "subtitle": "Cómo llegar",
       "icon": "map-pin",
-      "url": "https://maps.app.goo.gl/PLACEHOLDER"
+      "url": "https://maps.app.goo.gl/F1eNF9ni5t1L9byi8"
     },
     {
       "label": "Instagram",
