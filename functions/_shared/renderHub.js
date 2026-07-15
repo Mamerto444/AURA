@@ -38,24 +38,12 @@ function renderSocial(key, url) {
 }
 
 function renderHero(business) {
-  const accent = business.accentColor || '#6C5CE7';
-  if (!business.heroImage) {
-    // Sin imagen hero: perfil clásico con avatar circular
-    const socialsHtml = Object.entries(business.socials || {})
-      .map(([key, url]) => renderSocial(key, url)).join('\n');
-    return `
-  <div class="profile">
-    ${business.logo ? `<img class="avatar" src="${escapeHtml(business.logo)}" alt="${escapeHtml(business.name)}">` : ''}
-    <h1>${escapeHtml(business.name)}</h1>
-    ${business.tagline ? `<p class="tagline">${escapeHtml(business.tagline)}</p>` : ''}
-    ${socialsHtml ? `<div class="socials">${socialsHtml}</div>` : ''}
-  </div>`;
-  }
-
-  // Con imagen hero: banner full-width con overlay y datos del negocio encima
   const socialsHtml = Object.entries(business.socials || {})
     .map(([key, url]) => renderSocial(key, url)).join('\n');
-  return `
+
+  if (business.heroImage) {
+    // Banner full-width con foto de fondo, overlay y datos del negocio encima
+    return `
   <div class="hero" style="--hero-img:url('${escapeHtml(business.heroImage)}')">
     <div class="hero-overlay">
       ${business.logo ? `<img class="hero-logo" src="${escapeHtml(business.logo)}" alt="${escapeHtml(business.name)}">` : ''}
@@ -63,6 +51,27 @@ function renderHero(business) {
       ${business.tagline ? `<p class="hero-tagline">${escapeHtml(business.tagline)}</p>` : ''}
       ${socialsHtml ? `<div class="socials hero-socials">${socialsHtml}</div>` : ''}
     </div>
+  </div>`;
+  }
+
+  if (business.heroGradient) {
+    // Banner de color de marca (sin foto) con el logo en grande al centro
+    return `
+  <div class="hero-gradient">
+    ${business.logo ? `<img class="hero-gradient-logo" src="${escapeHtml(business.logo)}" alt="${escapeHtml(business.name)}">` : ''}
+    <h1 class="hero-name">${escapeHtml(business.name)}</h1>
+    ${business.tagline ? `<p class="hero-tagline">${escapeHtml(business.tagline)}</p>` : ''}
+    ${socialsHtml ? `<div class="socials hero-socials">${socialsHtml}</div>` : ''}
+  </div>`;
+  }
+
+  // Sin hero: perfil clásico con avatar circular
+  return `
+  <div class="profile">
+    ${business.logo ? `<img class="avatar" src="${escapeHtml(business.logo)}" alt="${escapeHtml(business.name)}">` : ''}
+    <h1>${escapeHtml(business.name)}</h1>
+    ${business.tagline ? `<p class="tagline">${escapeHtml(business.tagline)}</p>` : ''}
+    ${socialsHtml ? `<div class="socials">${socialsHtml}</div>` : ''}
   </div>`;
 }
 
@@ -76,7 +85,7 @@ function renderGallery(images) {
 
 export function renderHub(business) {
   const accent = business.accentColor || '#6C5CE7';
-  const hasHero = !!business.heroImage;
+  const hasHero = !!(business.heroImage || business.heroGradient);
   const buttonsHtml = (business.buttons || []).map(renderButton).join('\n');
   const galleryHtml = renderGallery(business.gallery);
   const heroHtml = renderHero(business);
@@ -151,6 +160,22 @@ export function renderHub(business) {
   }
   .hero-socials { margin-bottom: 0; }
 
+  /* ── HERO GRADIENTE (sin foto, color de marca) ── */
+  .hero-gradient {
+    width: 100%;
+    padding: 40px 16px 32px;
+    background: linear-gradient(160deg, var(--accent) 0%, #0a0a0c 130%);
+    border-radius: 0 0 24px 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .hero-gradient-logo {
+    width: 96px; height: 96px; border-radius: 50%;
+    object-fit: cover; margin: 0 auto 14px; display: block;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  }
+
   /* ── PERFIL CLÁSICO (sin imagen) ── */
   .profile { text-align: center; margin-bottom: 20px; }
   .avatar {
@@ -191,6 +216,7 @@ export function renderHub(business) {
   }
   .gallery-item img {
     width: 100%; height: 100%; object-fit: cover;
+    object-position: 50% 70%;
     display: block;
   }
 

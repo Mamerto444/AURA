@@ -14,7 +14,8 @@ export function renderReview(business, slug) {
   const accent = business.accentColor || '#6C5CE7';
   const starIcon = icons.star;
   const ownerPhone = (business.ownerWhatsapp || '').replace(/[^\d]/g, '');
-  const googleUrl = business.googleReviewUrl || '';
+  const rawGoogleUrl = business.googleReviewUrl || '';
+  const googleUrl = rawGoogleUrl.includes('PLACE_ID') ? '' : rawGoogleUrl;
 
   return `<!DOCTYPE html>
 <html lang="es">
@@ -97,14 +98,18 @@ export function renderReview(business, slug) {
   </div>
 
   <div class="branch" id="positive-branch" hidden>
-    <p>¡Qué gusto! Te llevamos a dejar tu reseña en Google…</p>
-    <a class="btn" id="google-link" href="${escapeHtml(googleUrl)}">Ir a Google ahora</a>
+    ${googleUrl
+      ? `<p>¡Qué gusto! Te llevamos a dejar tu reseña en Google…</p>
+    <a class="btn" id="google-link" href="${escapeHtml(googleUrl)}">Ir a Google ahora</a>`
+      : `<p>¡Qué gusto! Gracias por contarnos cómo te fue.</p>`}
   </div>
 
   <div class="branch" id="negative-branch" hidden>
     <p>Gracias por avisarnos. ¿Nos cuentas qué pasó para poder mejorarlo directamente contigo?</p>
     <a class="btn" id="whatsapp-link" href="#" target="_blank" rel="noopener">Escribirle al negocio</a>
-    <a class="secondary-link" id="google-anyway-link" href="${escapeHtml(googleUrl)}">Prefiero dejar mi reseña en Google de todas formas</a>
+    ${googleUrl
+      ? `<a class="secondary-link" id="google-anyway-link" href="${escapeHtml(googleUrl)}">Prefiero dejar mi reseña en Google de todas formas</a>`
+      : ''}
   </div>
 </main>
 <script>
