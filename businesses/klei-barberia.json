@@ -32,13 +32,13 @@
     {
       "label": "Instagram del negocio",
       "subtitle": "Nuestro trabajo",
-      "icon": "camera",
+      "icon": "instagram",
       "url": "https://www.instagram.com/kleibarber25/"
     },
     {
       "label": "Instagram del barbero",
       "subtitle": "Sígueme por acá",
-      "icon": "camera",
+      "icon": "instagram",
       "url": "https://www.instagram.com/kleiver327/"
     }
   ]

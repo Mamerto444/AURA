@@ -10,5 +10,6 @@ export const icons = {
   gift: '<rect x="3" y="9" width="18" height="12" rx="1.5"/><path d="M3 9h18M12 9v12M12 9c-1.6 0-4-1-4-3.2S9.4 3 11 3c1.6 0 2 2.5 1 3.5m0 0c1-1 1.4-3.5 3-3.5s3 1.2 3 2.8-2.4 3.2-4 3.2"/>',
   globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15.5 0 18M12 3c-2.5 2.5-2.5 15.5 0 18"/>',
   facebook: '<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M14 9h-1.5A1.5 1.5 0 0 0 11 10.5V12m3 0h-3m0 0v6"/>',
+  instagram: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none"/>',
   link: '<path d="M9.5 14.5l5-5M8 17H6a4 4 0 0 1 0-8h2m8 0h2a4 4 0 0 1 0 8h-2"/>',
 };

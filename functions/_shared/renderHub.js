@@ -1,7 +1,7 @@
 import { icons } from './icons.js';
 
 const SOCIAL_ICON_BY_KEY = {
-  instagram: 'camera',
+  instagram: 'instagram',
   tiktok: 'music',
   whatsapp: 'chat',
   facebook: 'facebook',
