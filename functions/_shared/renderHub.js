@@ -1,8 +1,9 @@
 import { icons } from './icons.js';
+import { resolveTheme } from './themes.js';
 
 const SOCIAL_ICON_BY_KEY = {
   instagram: 'instagram',
-  tiktok: 'music',
+  tiktok: 'tiktok',
   whatsapp: 'chat',
   facebook: 'facebook',
   web: 'globe',
@@ -85,6 +86,7 @@ function renderGallery(images) {
 
 export function renderHub(business) {
   const accent = business.accentColor || '#6C5CE7';
+  const theme = resolveTheme(business);
   const hasHero = !!(business.heroImage || business.heroGradient);
   const buttonsHtml = (business.buttons || []).map(renderButton).join('\n');
   const galleryHtml = renderGallery(business.gallery);
@@ -95,19 +97,19 @@ export function renderHub(business) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="dark">
+<meta name="color-scheme" content="${theme.colorScheme}">
 <title>${escapeHtml(business.name)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-deep: #0a0a0c;
-    --bg-elevated: rgba(255,255,255,0.06);
-    --bg-elevated-hover: rgba(255,255,255,0.1);
-    --border: rgba(255,255,255,0.09);
-    --text-primary: #f5f5f7;
-    --text-muted: #9a9aa2;
+    --bg-deep: ${theme.bgDeep};
+    --bg-elevated: ${theme.bgElevated};
+    --bg-elevated-hover: ${theme.bgElevatedHover};
+    --border: ${theme.border};
+    --text-primary: ${theme.textPrimary};
+    --text-muted: ${theme.textMuted};
     --accent: ${accent};
     --radius: 16px;
   }
@@ -164,7 +166,7 @@ export function renderHub(business) {
   .hero-gradient {
     width: 100%;
     padding: 40px 16px 32px;
-    background: linear-gradient(160deg, var(--accent) 0%, #0a0a0c 130%);
+    background: linear-gradient(160deg, var(--accent) 0%, var(--bg-deep) 130%);
     border-radius: 0 0 24px 24px;
     text-align: center;
     margin-bottom: 20px;
@@ -231,6 +233,7 @@ export function renderHub(business) {
     border-radius: var(--radius);
     background: var(--bg-elevated);
     border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
     color: var(--text-primary); text-decoration: none;
     transition: transform 150ms ease, background 150ms ease;
   }

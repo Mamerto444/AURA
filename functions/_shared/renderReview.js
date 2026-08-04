@@ -1,4 +1,5 @@
 import { icons } from './icons.js';
+import { resolveTheme } from './themes.js';
 
 function escapeHtml(str = '') {
   return String(str).replace(/[&<>"']/g, (c) => ({
@@ -12,6 +13,7 @@ function toScriptSafeJson(value) {
 
 export function renderReview(business, slug) {
   const accent = business.accentColor || '#6C5CE7';
+  const theme = resolveTheme(business);
   const starIcon = icons.star;
   const ownerPhone = (business.ownerWhatsapp || '').replace(/[^\d]/g, '');
   const rawGoogleUrl = business.googleReviewUrl || '';
@@ -22,19 +24,19 @@ export function renderReview(business, slug) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="dark">
+<meta name="color-scheme" content="${theme.colorScheme}">
 <title>Tu opinión — ${escapeHtml(business.name)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-deep: #0a0a0c;
-    --bg-elevated: rgba(255,255,255,0.06);
-    --bg-elevated-hover: rgba(255,255,255,0.1);
-    --border: rgba(255,255,255,0.09);
-    --text-primary: #f5f5f7;
-    --text-muted: #9a9aa2;
+    --bg-deep: ${theme.bgDeep};
+    --bg-elevated: ${theme.bgElevated};
+    --bg-elevated-hover: ${theme.bgElevatedHover};
+    --border: ${theme.border};
+    --text-primary: ${theme.textPrimary};
+    --text-muted: ${theme.textMuted};
     --accent: ${accent};
     --radius: 16px;
   }
@@ -105,26 +107,18 @@ export function renderReview(business, slug) {
   </div>
 
   <div class="branch" id="negative-branch" hidden>
-    <p>Gracias por avisarnos. ¿Nos cuentas qué pasó para poder mejorarlo directamente contigo?</p>
-    <a class="btn" id="whatsapp-link" href="#" target="_blank" rel="noopener">Escribirle al negocio</a>
-    ${googleUrl
-      ? `<a class="secondary-link" id="google-anyway-link" href="${escapeHtml(googleUrl)}">Prefiero dejar mi reseña en Google de todas formas</a>`
-      : ''}
+    <p>Gracias por tu calificación. Tu opinión nos ayuda a seguir mejorando.</p>
   </div>
 </main>
 <script>
 (function () {
   var GOOGLE_URL = ${toScriptSafeJson(googleUrl)};
-  var OWNER_PHONE = ${toScriptSafeJson(ownerPhone)};
-  var BUSINESS_NAME = ${toScriptSafeJson(business.name)};
   var SLUG = ${toScriptSafeJson(slug)};
 
   var stars = Array.prototype.slice.call(document.querySelectorAll('.star-btn'));
   var positive = document.getElementById('positive-branch');
   var negative = document.getElementById('negative-branch');
   var googleLink = document.getElementById('google-link');
-  var whatsappLink = document.getElementById('whatsapp-link');
-  var googleAnywayLink = document.getElementById('google-anyway-link');
 
   stars.forEach(function (btn) {
     btn.addEventListener('click', function () {
@@ -146,13 +140,6 @@ export function renderReview(business, slug) {
         navigator.sendBeacon('/track/' + SLUG + '?type=negative');
         positive.hidden = true;
         negative.hidden = false;
-        var message = 'Hola, tuve una experiencia de ' + value + ' estrella(s) en ' + BUSINESS_NAME + ' y quisiera platicarlo.';
-        if (OWNER_PHONE) {
-          whatsappLink.href = 'https://wa.me/' + OWNER_PHONE + '?text=' + encodeURIComponent(message);
-        }
-        if (GOOGLE_URL) {
-          googleAnywayLink.href = GOOGLE_URL;
-        }
       }
     });
   });

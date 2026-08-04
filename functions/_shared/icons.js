@@ -12,4 +12,5 @@ export const icons = {
   facebook: '<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M14 9h-1.5A1.5 1.5 0 0 0 11 10.5V12m3 0h-3m0 0v6"/>',
   instagram: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none"/>',
   link: '<path d="M9.5 14.5l5-5M8 17H6a4 4 0 0 1 0-8h2m8 0h2a4 4 0 0 1 0 8h-2"/>',
+  tiktok: '<path d="M15 3v10.5a4 4 0 1 1-3-3.9"/><path d="M15 3c.3 2.7 2.2 4.7 5 5"/>',
 };

@@ -1,4 +1,4 @@
-# Proyecto: Sistema NFC para negocios (FlowPages)
+# Proyecto: Sistema NFC para negocios (AURA)
 
 ## ⚠️ Estado actual de la implementación (leer primero)
 
@@ -18,9 +18,9 @@ Ya construido y probado localmente (`npx wrangler pages dev .` en puerto 8788):
   full-width con overlay si lo hay; además de `gallery` (carrusel horizontal de imágenes,
   opcional).
 - **Funnel de reseñas** (`functions/review/[slug].js` + `functions/_shared/renderReview.js`):
-  calificación 1-5 estrellas. 4-5★ → redirect a `googleReviewUrl` del negocio. 1-3★ → botón de
-  WhatsApp precargado al `ownerWhatsapp` + enlace secundario para igual ir a Google (así se
-  respeta la política de Google de no bloquear el paso público, ver sección del funnel más abajo).
+  calificación 1-5 estrellas. 4-5★ → redirect a `googleReviewUrl` del negocio. 1-3★ → solo
+  mensaje de agradecimiento, sin acción de contacto (se quitó el botón de WhatsApp que existía
+  antes en esta rama).
 - **Config de negocios** en `businesses/*.json` (uno por negocio, no un JSON combinado): ya
   existen `klei-barberia.json` (piloto real, con placeholders `+52XXXXXXXXXX` / `PLACE_ID_AQUI` /
   link de Maps pendientes de datos reales) y `starbucks.json` (demo usada para probar el modo
@@ -40,7 +40,7 @@ Ya construido y probado localmente (`npx wrangler pages dev .` en puerto 8788):
 ## Contexto de negocio
 
 Alfredo compró varias tarjetas NFC para revenderlas/ofrecerlas como servicio a negocios locales
-(barberías, doctores, nail salons, restaurantes, retail, etc.) bajo su marca FlowPages.
+(barberías, doctores, nail salons, restaurantes, retail, etc.) bajo su marca AURA.
 
 La idea original era simple: programar el chip para mandar directo a las reseñas de Google
 (más reseñas = más clientes potenciales que confían en el negocio). Pero el plan evolucionó a
@@ -50,7 +50,7 @@ tarjeta NFC genérica de Amazon, y lo que justifica venderlo como servicio recur
 (retainer), no como venta única.
 
 Stack disponible: Cloudflare Pages (con Pages Functions), vanilla HTML/CSS/JS, dominios tipo
-`flowpages.pages.dev`. Se trabaja vía Claude Code en la IDE Antigravity.
+`aura.pages.dev`. Se trabaja vía Claude Code en la IDE Antigravity.
 
 ---
 
@@ -81,6 +81,7 @@ Formato completo del JSON:
   "logo": "URL del logo (circular, se ve bien en 64x64px)",
   "heroImage": "URL de imagen de portada (horizontal, mínimo 800px de ancho)",
   "accentColor": "#HEXCOLOR",
+  "theme": "dark",
   "googleReviewUrl": "https://search.google.com/local/writereview?placeid=PLACE_ID",
   "ownerWhatsapp": "+52XXXXXXXXXX",
   "gallery": [
@@ -119,7 +120,13 @@ Formato completo del JSON:
 }
 ```
 
-**Iconos disponibles:** `star`, `chat`, `map-pin`, `camera`, `globe`, `music`, `link`, `calendar`
+**Iconos disponibles:** `star`, `chat`, `map-pin`, `camera`, `globe`, `music`, `link`, `calendar`,
+`instagram`, `facebook`, `tiktok`, `phone`, `mail`, `gift`
+
+**Tema visual:** `theme` acepta `"dark"` (default, fondo negro `#0a0a0c`) o `"light"` (fondo
+cálido `#faf7f2`, texto oscuro) — ambos definidos en `functions/_shared/themes.js`. Elegir según
+la marca: negro para negocios con estética moderna/nocturna, claro para negocios con logo/imagen
+de fondo blanco o estética elegante (ej. `elegans-nails`, tema `light`).
 
 ### Paso 3 — Registrar el slug en `data/redirects.json`
 
@@ -212,7 +219,7 @@ cliente ya tiene la tarjeta.
 Grabar en el chip una URL corta y fija, propia, tipo:
 
 ```
-flowpages.pages.dev/r/klei-barberia
+aura.pages.dev/r/klei-barberia
 ```
 
 Esa página no es el destino final — es un "router". Existe una tabla (JSON simple o Cloudflare
@@ -233,7 +240,7 @@ usuario no percibe el intermediario.
   chip "crudo" da esto. Es un upsell claro: dashboard de "tu tarjeta se escaneó X veces este
   mes".
 - **Modelo de negocio recurrente**: el negocio paga por "gestión y actualización del destino",
-  encajando con el modelo de retainers que Alfredo ya quiere construir en FlowPages.
+  encajando con el modelo de retainers que Alfredo ya quiere construir en AURA.
 
 ---
 
@@ -248,8 +255,7 @@ En vez de mandar a todos directo a Google, primero se pregunta cómo fue la expe
 ```
 
 - **4-5 estrellas** → redirect automático al link de "escribir reseña" de Google.
-- **1-3 estrellas** → WhatsApp precargado al dueño para resolver en privado. Opción de ir a
-  Google de todas formas (para cumplir políticas de Google contra review gating).
+- **1-3 estrellas** → solo mensaje de agradecimiento, sin acción de contacto hacia el dueño.
 
 ---
 
@@ -268,6 +274,7 @@ En vez de mandar a todos directo a Google, primero se pregunta cómo fue la expe
 |------|---------|--------|
 | `klei-barberia` | Klei Barbería | ✅ Activo |
 | `starbucks` | Starbucks (demo) | 🎯 Demo |
+| `elegans-nails` | ElegansNails | ✅ Activo (falta subir logo) |
 
 ---
 

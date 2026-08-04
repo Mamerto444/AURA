@@ -1,0 +1,54 @@
+{
+  "name": "ElegansNails",
+  "tagline": "Libertad en tus manos",
+  "logo": "/assets/elegans-nails/logo.jpg",
+  "accentColor": "#C9A255",
+  "theme": "light",
+  "googleReviewUrl": "https://search.google.com/local/writereview?placeid=ChIJb-DYD2ixKIQRZDZt3w-n8BU",
+  "ownerWhatsapp": "+523335038801",
+  "socials": {
+    "instagram": "https://www.instagram.com/elegansnails/",
+    "tiktok": "https://www.tiktok.com/@elegansnails",
+    "whatsapp": "https://wa.me/523335038801",
+    "web": "https://elegansnails.com/"
+  },
+  "buttons": [
+    {
+      "label": "Dejar una reseña",
+      "subtitle": "Tu opinión nos ayuda mucho",
+      "icon": "star",
+      "url": "/review/elegans-nails",
+      "highlight": true
+    },
+    {
+      "label": "WhatsApp",
+      "subtitle": "Guarda nuestro contacto, para cualquier duda",
+      "icon": "chat",
+      "url": "https://wa.me/523335038801?text=Hola%2C%20quiero%20agendar%20una%20cita%20en%20ElegansNails"
+    },
+    {
+      "label": "Instagram",
+      "subtitle": "Contenido que te va a enamorar",
+      "icon": "instagram",
+      "url": "https://www.instagram.com/elegansnails/"
+    },
+    {
+      "label": "TikTok",
+      "subtitle": "No te pierdas nuestros videos",
+      "icon": "tiktok",
+      "url": "https://www.tiktok.com/@elegansnails"
+    },
+    {
+      "label": "Sucursal",
+      "subtitle": "C. Vicente Guerrero 80, San Juan de Dios, Guadalajara",
+      "icon": "map-pin",
+      "url": "https://maps.app.goo.gl/jcvEKWmNDGR1g8av9"
+    },
+    {
+      "label": "Página web",
+      "subtitle": "Compra nuestros productos",
+      "icon": "globe",
+      "url": "https://elegansnails.com/"
+    }
+  ]
+}
