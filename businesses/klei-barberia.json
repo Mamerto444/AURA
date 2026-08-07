@@ -12,14 +12,14 @@
   "buttons": [
     {
       "label": "Dejar una reseña",
-      "subtitle": "Tu opinión nos ayuda mucho",
+      "subtitle": "Cuéntanos cómo te fue",
       "icon": "star",
       "url": "/review/klei-barberia",
       "highlight": true
     },
     {
       "label": "Agendar cita",
-      "subtitle": "Reserva tu corte en línea",
+      "subtitle": "Aparta tu lugar, sin esperar en la silla",
       "icon": "calendar",
       "url": "https://kleibarber.pages.dev/"
     },
@@ -31,7 +31,7 @@
     },
     {
       "label": "Instagram del negocio",
-      "subtitle": "Nuestro trabajo",
+      "subtitle": "Mira nuestros mejores cortes",
       "icon": "instagram",
       "url": "https://www.instagram.com/kleibarber25/"
     },
