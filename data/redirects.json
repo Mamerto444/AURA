@@ -1,5 +1,6 @@
 {
   "klei-barberia": { "type": "hub" },
   "starbucks": { "type": "hub" },
-  "elegans-nails": { "type": "hub" }
+  "elegans-nails": { "type": "hub" },
+  "elegans-nails-parian": { "type": "hub" }
 }

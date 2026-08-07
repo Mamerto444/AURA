@@ -4,12 +4,12 @@
   "logo": "/assets/elegans-nails/logo.jpg",
   "accentColor": "#C9A255",
   "theme": "light",
-  "googleReviewUrl": "https://search.google.com/local/writereview?placeid=ChIJb-DYD2ixKIQRZDZt3w-n8BU",
-  "ownerWhatsapp": "+523345938219",
+  "googleReviewUrl": "PLACE_ID_AQUI",
+  "ownerWhatsapp": "+523345938220",
   "socials": {
     "instagram": "https://www.instagram.com/elegansnails/",
     "tiktok": "https://www.tiktok.com/@elegansnails",
-    "whatsapp": "https://wa.me/523345938219",
+    "whatsapp": "https://wa.me/523345938220",
     "web": "https://elegansnails.com/"
   },
   "buttons": [
@@ -17,14 +17,14 @@
       "label": "Dejar una reseña",
       "subtitle": "Tu opinión nos ayuda mucho",
       "icon": "star",
-      "url": "/review/elegans-nails",
+      "url": "/review/elegans-nails-parian",
       "highlight": true
     },
     {
       "label": "WhatsApp",
       "subtitle": "Guarda nuestro contacto, para cualquier duda",
       "icon": "chat",
-      "url": "https://wa.me/523345938219?text=Hola%2C%20quiero%20agendar%20una%20cita%20en%20ElegansNails"
+      "url": "https://wa.me/523345938220?text=Hola%2C%20quiero%20agendar%20una%20cita%20en%20ElegansNails"
     },
     {
       "label": "Instagram",
@@ -40,9 +40,9 @@
     },
     {
       "label": "Sucursal",
-      "subtitle": "C. Vicente Guerrero 80, San Juan de Dios, Guadalajara",
+      "subtitle": "El Parián, San Juan de Dios, Guadalajara (2do piso)",
       "icon": "map-pin",
-      "url": "https://maps.app.goo.gl/jcvEKWmNDGR1g8av9"
+      "url": "https://maps.app.goo.gl/9wUcQHDAwzzZcqGk9"
     },
     {
       "label": "Página web",

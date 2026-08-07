@@ -27,15 +27,25 @@ Ya construido y probado localmente (`npx wrangler pages dev .` en puerto 8788):
   hero + galería).
 - Iconos: SVGs propios dibujados a mano en `functions/_shared/icons.js` (no hay libraría de
   íconos ni emojis), referenciados por nombre desde el JSON de cada negocio.
+- **Analytics** (`functions/track/[slug].js` + `functions/stats/[slug].js`): cada escaneo en
+  `functions/r/[slug].js` se registra en el namespace KV `ANALYTICS` (binding declarado en
+  `wrangler.toml`, id `c573da784a2a42c8afbee5d480c30623`) vía `waitUntil`, sin bloquear el
+  redirect — guarda conteo total, última fecha de escaneo y desglose mensual. El funnel de
+  reseñas manda un `navigator.sendBeacon` a `/track/[slug]` en cada calificación, separando
+  positivas (4-5★, van a Google) de negativas (1-3★). `/stats/[slug]?key=...` expone un
+  dashboard de métricas por negocio (escaneos totales, tasa de satisfacción, historial mensual),
+  protegido por query param `key`.
+- Klei Barbería ya tiene datos reales completos (WhatsApp, Maps, Place ID, logo propio en
+  `assets/klei-barberia/`) — ya no hay placeholders pendientes ahí.
+- **Repo conectado a GitHub** (`github.com/Mamerto444/AURA`) y **desplegado en Cloudflare
+  Pages**: `https://aura-dre.pages.dev`. El nombre del proyecto en `wrangler.toml` es `aura`.
 
 **Pendiente / próximos pasos:**
-- Analytics de escaneos por slug y por rama del funnel (requiere Cloudflare KV o D1 — no
-  configurado todavía, hasta ahora todo es JSON estático en el repo).
-- Conectar el repo a GitHub + desplegar el proyecto a Cloudflare Pages (todavía no hay remoto).
-- Reemplazar placeholders de Klei Barbería con datos reales (WhatsApp, Place ID de Google, link
-  de Maps).
 - Definir si negocios nivel Básico (`type: "direct"`) se van a usar pronto o si por ahora todos
   arrancan en Pro/Premium con hub.
+- Subir logo real de ElegansNails (sigue usando placeholder según la tabla de negocios activos).
+- Confirmar si `aura-dre.pages.dev` es el dominio final para grabar en chips NFC / imprimir QRs,
+  o si se va a conectar un dominio propio más adelante.
 
 ## Contexto de negocio
 
@@ -280,7 +290,7 @@ En vez de mandar a todos directo a Google, primero se pregunta cómo fue la expe
 
 ## Próximos pasos técnicos
 
-1. Conectar `functions/hub/[slug].js` para leer el JSON del negocio y servir el HTML
-2. Verificar que `functions/r/[slug].js` apunte correctamente al hub
-3. Agregar Place ID real de Starbucks / Klei en sus respectivos JSON
-4. Escalar a nuevos clientes usando el protocolo de creación de este documento
+1. Subir logo real de ElegansNails (sigue con placeholder).
+2. Confirmar dominio final (`aura-dre.pages.dev` vs. dominio propio) antes de grabar chips NFC
+   o imprimir QRs en producción.
+3. Escalar a nuevos clientes usando el protocolo de creación de este documento.
