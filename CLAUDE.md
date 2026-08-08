@@ -1,4 +1,11 @@
-# Proyecto: Sistema NFC para negocios (AURA)
+# Proyecto: Sistema NFC para negocios (RAVE)
+
+**Nota de marca:** el nombre visible al cliente es **RAVE** (iniciales de Alfredo). La
+infraestructura técnica (repo GitHub `Mamerto444/AURA`, proyecto Cloudflare Pages `aura`, dominio
+`aura-dre.pages.dev`) sigue usando "aura" internamente — no se renombró porque eso implicaría
+mover el dominio y romper las URLs ya grabadas en las tarjetas NFC de Klei Barbería y
+ElegansNails, que están en producción. Todo el copy visible (landing, footer de los hubs,
+dashboard de stats) ya dice "RAVE".
 
 ## ⚠️ Estado actual de la implementación (leer primero)
 
@@ -269,12 +276,18 @@ En vez de mandar a todos directo a Google, primero se pregunta cómo fue la expe
 
 ---
 
-## Empaquetado sugerido para venta
+## Empaquetado y precios (vigente — reflejado en `index.html`)
 
-1. **Básico** — solo reseñas de Google (sin router propio).
-2. **Pro** — router propio + landing hub con imágenes + reseñas + WhatsApp.
-3. **Premium** — todo lo anterior + funnel de reseñas inteligente + analytics de escaneos +
-   mantenimiento mensual (retainer).
+1. **Básico — $400 MXN pago único**: tarjeta NFC física + redirect directo a reseñas de Google
+   (sin router propio, sin hub).
+2. **Pro — $800 MXN pago único**: router propio (destino actualizable sin comprar otra tarjeta) +
+   landing hub con fotos/galería + WhatsApp/redes + funnel inteligente de reseñas + contador de
+   escaneos.
+
+Descuento por volumen (reflejado en `index.html`): 2 tarjetas $700 c/u, 5+ tarjetas $600 c/u.
+
+Se descartó el tercer nivel "Premium" con retainer mensual — por ahora solo 2 paquetes, ambos de
+pago único, para bajar la fricción de la primera venta.
 
 ---
 

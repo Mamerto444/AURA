@@ -44,7 +44,7 @@ function renderStats(slug, s) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AURA Stats — ${slug}</title>
+<title>RAVE Stats — ${slug}</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #0a0a0c; color: #f5f5f7; font-family: system-ui, sans-serif; padding: 28px 16px 48px; max-width: 520px; margin: 0 auto; }
@@ -68,7 +68,7 @@ function renderStats(slug, s) {
 </head>
 <body>
   <div class="header">
-    <p class="brand">AURA</p>
+    <p class="brand">RAVE</p>
     <h1>Dashboard de métricas</h1>
     <p class="slug">${slug}</p>
   </div>

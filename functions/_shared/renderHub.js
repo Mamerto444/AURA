@@ -269,7 +269,7 @@ export function renderHub(business) {
   <div class="buttons">
     ${buttonsHtml}
   </div>
-  <footer><a href="/" target="_blank" rel="noopener">Hecho con AURA</a></footer>
+  <footer><a href="/" target="_blank" rel="noopener">Hecho by RAVE</a></footer>
 </main>
 </body>
 </html>`;
