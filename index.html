@@ -10,6 +10,7 @@
 <meta property="og:description" content="Sistema de reputación digital para negocios locales. Mira casos reales funcionando ahora mismo.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://aura-dre.pages.dev/og-image.jpg">
+<script>if('IntersectionObserver' in window){document.documentElement.classList.add('reveal-ready')}</script>
 <style>
   :root {
     --bg-deep: #0a0a0c;
@@ -19,6 +20,7 @@
     --text-primary: #f5f5f7;
     --text-muted: #9a9aa2;
     --accent: #D4A056;
+    --accent-light: #f0ce94;
     --accent-soft: rgba(212,160,86,0.12);
     --on-accent: #1c1509;
     --danger: #e0725c;
@@ -35,7 +37,6 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
-    padding-bottom: 84px; /* leave room for sticky CTA */
   }
 
   main {
@@ -64,8 +65,63 @@
     margin-bottom: 14px;
   }
 
+  .wordmark {
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .accent-word { color: var(--accent); }
+
+  /* ---------- SCROLL REVEALS ---------- */
+  /* Sin JS/IntersectionObserver: contenido visible siempre (progressive enhancement). */
+  html.reveal-ready .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  html.reveal-ready .reveal.in-view { opacity: 1; transform: translateY(0); }
+  html.reveal-ready .reveal:nth-child(2) { transition-delay: 90ms; }
+  html.reveal-ready .reveal:nth-child(3) { transition-delay: 180ms; }
+  html.reveal-ready .reveal:nth-child(4) { transition-delay: 270ms; }
+  @media (prefers-reduced-motion: reduce) {
+    html.reveal-ready .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  .live-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-right: 6px;
+    animation: livePulse 2s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .live-dot { animation: none; }
+  }
+  @keyframes livePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.3); }
+  }
+
   /* ---------- HERO ---------- */
-  .hero { padding-top: 56px; text-align: center; }
+  .hero { padding-top: 56px; text-align: center; position: relative; overflow: hidden; }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 640px;
+    max-width: 180vw;
+    height: 380px;
+    background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(212,160,86,0.18) 0%, transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+  }
   .hero h1 {
     font-size: 30px;
     font-weight: 800;
@@ -78,6 +134,22 @@
     color: var(--text-muted);
   }
   .hero .proof strong { color: var(--text-primary); }
+
+  .proof-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    max-width: 340px;
+    margin: 28px auto 0;
+  }
+  .proof-item {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 12px;
+  }
+  .proof-number { font-size: 26px; font-weight: 800; color: var(--accent); line-height: 1; }
+  .proof-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
 
   /* ---------- BUTTONS ---------- */
   .btn {
@@ -118,10 +190,11 @@
   }
   .problem-item .icon {
     flex-shrink: 0;
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    background: rgba(224,114,92,0.14);
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: rgba(224,114,92,0.1);
+    border: 1px solid rgba(224,114,92,0.2);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -137,8 +210,8 @@
   .step::before {
     content: '';
     position: absolute;
-    left: 17px;
-    top: 36px;
+    left: 19px;
+    top: 40px;
     bottom: 0;
     width: 1px;
     background: var(--border);
@@ -146,12 +219,12 @@
   .step:last-child::before { display: none; }
   .step-num {
     flex-shrink: 0;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--accent-soft);
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: rgba(212,160,86,0.1);
     color: var(--accent);
-    border: 1px solid rgba(212,160,86,0.35);
+    border: 1px solid rgba(212,160,86,0.2);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -197,6 +270,18 @@
     background: linear-gradient(180deg, rgba(212,160,86,0.1), rgba(212,160,86,0.03));
     border: 1px solid rgba(212,160,86,0.45);
   }
+  .plan.featured::before {
+    content: '';
+    position: absolute;
+    top: -36px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 260px;
+    height: 140px;
+    background: radial-gradient(ellipse, rgba(212,160,86,0.3) 0%, transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+  }
   .plan-badge {
     position: absolute;
     top: -12px;
@@ -216,8 +301,16 @@
   .plan-price span { font-size: 14px; font-weight: 600; color: var(--text-muted); }
   .plan-desc { font-size: 13.5px; margin-bottom: 16px; }
   .plan-features { list-style: none; margin: 0 0 20px; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-  .plan-features li { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--text-primary); }
-  .plan-features li svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; color: var(--accent); }
+  .plan-features li { display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--text-primary); }
+  .plan-features li .check-icon {
+    flex-shrink: 0;
+    width: 22px; height: 22px;
+    border-radius: 7px;
+    background: rgba(212,160,86,0.1);
+    border: 1px solid rgba(212,160,86,0.2);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .plan-features li .check-icon svg { width: 12px; height: 12px; color: var(--accent); }
 
   .volume-box {
     padding: 18px;
@@ -228,9 +321,10 @@
   .volume-head { display: flex; gap: 12px; margin-bottom: 16px; }
   .volume-icon {
     flex-shrink: 0;
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    background: var(--accent-soft);
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    background: rgba(212,160,86,0.1);
+    border: 1px solid rgba(212,160,86,0.2);
     display: flex; align-items: center; justify-content: center;
   }
   .volume-icon svg { width: 18px; height: 18px; color: var(--accent); }
@@ -328,24 +422,54 @@
 
   footer {
     text-align: center;
-    padding: 28px 20px 100px;
+    padding: 28px 20px 48px;
     font-size: 12.5px;
     color: var(--text-muted);
   }
-  footer .brand { color: var(--accent); font-weight: 700; }
+  footer .brand { font-weight: 700; }
 
-  /* ---------- STICKY CTA ---------- */
-  .sticky-cta {
+  /* ---------- TOP BAR ---------- */
+  .top-bar {
     position: fixed;
-    left: 0; right: 0; bottom: 0;
-    padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
-    background: rgba(10,10,12,0.88);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-top: 1px solid var(--border);
-    z-index: 50;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--accent));
+    background-size: 200% 100%;
+    animation: topBarShimmer 6s linear infinite;
+    z-index: 200;
   }
-  .sticky-cta .btn { max-width: 480px; margin: 0 auto; }
+  @keyframes topBarShimmer { to { background-position: -200% 0; } }
+  @media (prefers-reduced-motion: reduce) { .top-bar { animation: none; } }
+
+  /* ---------- WHATSAPP FLOAT ---------- */
+  .wa-float {
+    position: fixed;
+    right: 18px;
+    bottom: calc(18px + env(safe-area-inset-bottom));
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    background: #25D366;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    z-index: 50;
+    transition: transform 0.15s ease;
+  }
+  .wa-float:active { transform: scale(0.94); }
+  .wa-float svg { width: 30px; height: 30px; fill: #fff; }
+  .wa-float::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: #25D366;
+    animation: waPing 2.4s ease-out infinite;
+    z-index: -1;
+  }
+  @media (prefers-reduced-motion: reduce) { .wa-float::before { animation: none; } }
+  @keyframes waPing {
+    0% { opacity: 0.45; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.6); }
+  }
 
   @media (min-width: 560px) {
     .hero h1 { font-size: 36px; }
@@ -364,8 +488,6 @@
     .volume-box { grid-column: 1 / -1; }
 
     .case { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-
-    .sticky-cta .btn { max-width: 420px; }
   }
 
   @media (min-width: 960px) {
@@ -379,41 +501,53 @@
 </head>
 <body>
 
+<div class="top-bar"></div>
+
 <main>
 
   <!-- HERO -->
   <header class="hero">
-    <span class="eyebrow">RAVE</span>
-    <h1>Convierte cada cliente que entra en una reseña de 5 estrellas</h1>
+    <span class="eyebrow wordmark">RAVE</span>
+    <h1>Convierte cada cliente que entra en una reseña de <span class="accent-word">5 estrellas</span></h1>
     <p class="lead">No vendemos tarjetas NFC. Vendemos un sistema que protege tu calificación en Google y trae más clientes que regresan.</p>
-    <a class="btn btn-primary" href="https://wa.me/523315849634?text=Hola%2C%20vi%20la%20p%C3%A1gina%20de%20RAVE%20y%20quiero%20cotizar%20tarjetas%20NFC%20para%20mi%20negocio" target="_blank" rel="noopener">
+    <a class="btn btn-primary" href="https://wa.me/523331954765?text=Hola%2C%20vi%20la%20p%C3%A1gina%20de%20RAVE%20y%20quiero%20cotizar%20tarjetas%20NFC%20para%20mi%20negocio" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.4c-1.3 0-2.5-.3-3.6-.8L3 20l1-5.7A8.4 8.4 0 1 1 21 11.5z"/></svg>
       Cotizar tarjeta para mi negocio
     </a>
     <p class="proof">Toca la tarjeta de un cliente real más abajo <strong>ahora mismo</strong>, sin capturas de pantalla.</p>
+    <div class="proof-bar">
+      <div class="proof-item">
+        <div class="proof-number" data-count-to="2">2</div>
+        <div class="proof-label">Negocios activos</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-number">Días</div>
+        <div class="proof-label">No semanas, para tener la tuya</div>
+      </div>
+    </div>
   </header>
 
   <!-- PROBLEM -->
   <section class="problem">
     <span class="eyebrow">El problema</span>
-    <h2>Una tarjeta NFC genérica no resuelve nada</h2>
+    <h2 class="reveal">Una tarjeta NFC genérica no resuelve <span class="accent-word">nada</span></h2>
     <p>Cualquiera compra un chip NFC en Amazon por $150. El problema no es el chip, es lo que (no) hace por tu negocio.</p>
     <div class="problem-list">
-      <div class="problem-item">
+      <div class="problem-item reveal">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
         <div>
           <h3>Destino fijo, para siempre</h3>
           <p>Si cambias de link, de promoción o de sucursal, la tarjeta ya grabada no sirve. Toca comprar otra.</p>
         </div>
       </div>
-      <div class="problem-item">
+      <div class="problem-item reveal">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M12 20V4M20 20v-7"/></svg></div>
         <div>
           <h3>Cero datos</h3>
           <p>No sabes si la tarjeta se usó una vez o cien. No sabes si sirvió de algo.</p>
         </div>
       </div>
-      <div class="problem-item">
+      <div class="problem-item reveal">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9L2.6 18a2 2 0 0 0 1.7 3h15.4a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></div>
         <div>
           <h3>Reseñas sin filtro</h3>
@@ -426,23 +560,23 @@
   <!-- HOW IT WORKS -->
   <section class="how">
     <span class="eyebrow">Cómo funciona RAVE</span>
-    <h2>Un router propio + un filtro de reseñas</h2>
+    <h2 class="reveal">Un <span class="accent-word">router propio</span> + un filtro de reseñas</h2>
     <div class="steps">
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">1</div>
         <div>
           <h3>Tu cliente toca la tarjeta</h3>
           <p>Llega a tu mini página: fotos, WhatsApp, ubicación y redes — todo en un solo lugar.</p>
         </div>
       </div>
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">2</div>
         <div>
           <h3>Le preguntamos cómo le fue</h3>
           <p>Antes de mandarlo a Google, un rápido "¿cómo estuvo tu experiencia?" con 5 estrellas.</p>
         </div>
       </div>
-      <div class="step">
+      <div class="step reveal">
         <div class="step-num">3</div>
         <div>
           <h3>Filtramos automáticamente</h3>
@@ -461,38 +595,38 @@
   <!-- PACKAGES -->
   <section class="packages">
     <span class="eyebrow">Paquetes</span>
-    <h2>Precios claros, sin sorpresas</h2>
+    <h2 class="reveal">Precios claros, sin sorpresas</h2>
     <p>Pago único. Tú eliges qué tanto necesitas.</p>
 
     <div class="plan-grid">
-      <div class="plan">
+      <div class="plan reveal">
         <div class="plan-name">Básico</div>
         <div class="plan-price">$400 <span>MXN</span></div>
         <p class="plan-desc">Para subir tus reseñas de Google ya, sin vueltas.</p>
         <ul class="plan-features">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Tarjeta NFC física personalizada con tu negocio</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Redirect directo a tus reseñas de Google</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Configuración incluida, listo en días</li>
+          <li><span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>Tarjeta NFC física personalizada con tu negocio</li>
+          <li><span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>Redirect directo a tus reseñas de Google</li>
+          <li><span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>Configuración incluida, listo en días</li>
         </ul>
-        <a class="btn btn-ghost" href="https://wa.me/523315849634?text=Hola%2C%20me%20interesa%20el%20paquete%20B%C3%A1sico%20de%20RAVE%20(%24400)%20para%20mi%20negocio" target="_blank" rel="noopener">Quiero el Básico</a>
+        <a class="btn btn-ghost" href="https://wa.me/523331954765?text=Hola%2C%20me%20interesa%20el%20paquete%20B%C3%A1sico%20de%20RAVE%20(%24400)%20para%20mi%20negocio" target="_blank" rel="noopener">Quiero el Básico</a>
       </div>
 
-      <div class="plan featured">
+      <div class="plan featured reveal">
         <span class="plan-badge">Más elegido</span>
         <div class="plan-name">Pro</div>
         <div class="plan-price">$800 <span>MXN</span></div>
         <p class="plan-desc">El sistema completo: router propio, página con tu marca y filtro de reseñas.</p>
         <ul class="plan-features">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Todo lo del Básico</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Router propio — cambia el destino cuando quieras</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Mini página con fotos, WhatsApp, ubicación y redes</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Filtro inteligente de reseñas (protege tu calificación)</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Contador de escaneos de tu tarjeta</li>
+          <li><span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>Todo lo del Básico</li>
+          <li><span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>Router propio — cambia el destino cuando quieras</li>
+          <li><span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>Mini página con fotos, WhatsApp, ubicación y redes</li>
+          <li><span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>Filtro inteligente de reseñas (protege tu calificación)</li>
+          <li><span class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>Contador de escaneos de tu tarjeta</li>
         </ul>
-        <a class="btn btn-primary" href="https://wa.me/523315849634?text=Hola%2C%20me%20interesa%20el%20paquete%20Pro%20de%20RAVE%20(%24800)%20para%20mi%20negocio" target="_blank" rel="noopener">Quiero el Pro</a>
+        <a class="btn btn-primary" href="https://wa.me/523331954765?text=Hola%2C%20me%20interesa%20el%20paquete%20Pro%20de%20RAVE%20(%24800)%20para%20mi%20negocio" target="_blank" rel="noopener">Quiero el Pro</a>
       </div>
 
-      <div class="volume-box">
+      <div class="volume-box reveal">
         <div class="volume-head">
           <span class="volume-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9M14 17H5M17 3l4 4-4 4M7 21l-4-4 4-4"/></svg>
@@ -507,19 +641,19 @@
           <li class="highlight"><span class="volume-qty">2 tarjetas</span><span class="volume-price">$700 c/u <em>— ahorras $200</em></span></li>
           <li><span class="volume-qty">5 o más</span><span class="volume-price">$600 c/u <em>— ahorras $1,000+</em></span></li>
         </ul>
-        <a class="btn btn-ghost" href="https://wa.me/523315849634?text=Hola%2C%20me%20interesan%20varias%20tarjetas%20RAVE%20(2%20o%20m%C3%A1s)%20para%20mi%20negocio" target="_blank" rel="noopener">Cotizar varias tarjetas</a>
+        <a class="btn btn-ghost" href="https://wa.me/523331954765?text=Hola%2C%20me%20interesan%20varias%20tarjetas%20RAVE%20(2%20o%20m%C3%A1s)%20para%20mi%20negocio" target="_blank" rel="noopener">Cotizar varias tarjetas</a>
       </div>
     </div>
   </section>
 
   <!-- CASE STUDIES -->
   <section class="cases">
-    <span class="eyebrow">Casos reales</span>
-    <h2>No es una maqueta. Tócalo tú mismo</h2>
+    <span class="eyebrow"><span class="live-dot"></span>Casos reales</span>
+    <h2 class="reveal">No es una maqueta. Tócalo tú mismo</h2>
     <p>Esto ya funciona hoy, con negocios reales. Abre cualquiera de los dos en tu celular.</p>
 
     <div class="case">
-      <div class="case-card">
+      <div class="case-card reveal">
         <div class="case-head">
           <img class="case-logo" src="data:image/jpeg;base64,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" alt="Logo Klei Barbería">
           <div>
@@ -534,7 +668,7 @@
         </a>
       </div>
 
-      <div class="case-card">
+      <div class="case-card reveal">
         <div class="case-head">
           <img class="case-logo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAUEBAQEAwUEBAQGBQUGCA0ICAcHCBALDAkNExAUExIQEhIUFx0ZFBYcFhISGiMaHB4fISEhFBkkJyQgJh0gISD/2wBDAQUGBggHCA8ICA8gFRIVICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICD/wAARCACgAKADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7LooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArN1vUBp2kyzf8tG/dp/vHv+HWs7W/F1jpMjW0Q+1XQ6opwqf7x9fauZl8Rr4iEenX6LaOz/ALiZGO0P0AcHsc4z2rzMTjacU6UJe9+p20cNN2nJe6d/p94l/p0N3GMCRckHsehH51arziLxWNEiGmafEt1HCxDzSkje2edoHQZ6V0+ieK7DWHFuR9mu+0TnIb/dPf6darD46lUtTcve/UmrhqkbyS0Ogooor0TkCiiigAooooAKKKKACiiigAooooAKKKKACuO8W+Jp7SZNC0VWm1S4HPljJiU+n+0f0HPpW14g1dtJ05TbQ/aNQuX8m0tx1kkP9AMkn0FV/DfhyPRYZLm6k+16rdHfc3TdWY8kL6LXDXc6j9jSdu77Ly83+G/Y6aSjBe0mr9l3/wCAchafDzVp4PNvL+G2lbnywpkOfc5H9a5TWdPvtC1A2V+oDY3I6nKyL6ivea89+K8Cf8I5Z3+PnguAmfZgc/qBXk47LaVLDupT3j+J6GFxlSdVRnszi9D0u/8AEF8bWxVQEG6SV/uxj39/aumvfh/rFpELiwvY7qVPmCAGNsj+6cnn8q1vhbAi+EGuwPnubhyT6hflA/Q/nXdU8FllKph4zqXvLX0FicbUhVcYbI5Lwj4nfU/M0nVFMOrW3DI42mQDvj1HcfjXW1zniTw4dTMWp6Y4tdatDvgn7Pj+B/UHp+NX9C1ddZ0tbgxG3uY2MVzbt96GVfvKf5j1BBr1sPKcH7Gq7vo+6/zX/BOCqoyXtIad12/4BqUUUV2nMFFFFABRRRQAUUUUAFFFFABQSFBJIAHJJ7UUEAggjINAGLp9r9t1R9fuVySpis0b/llF3b/ecjP0Cj1rao6DAoqIQUVYqUuZhXJePrEano2n6aelzqMEZ+mTn9M11tZd9ALnXNMQjK25kuCPcLtX/wBCP5VjiYe0pOD66fezSjLlmpdjI+H9ubPwp9hIwba6niI+khrq6y9Mh+y6hqkAGFknFwv/AANRn/x5TWpTw0eSlGHbT7tArS5qjl31+8Kxbu1Gm6yNctxtimAivkHRlH3JfqvQ/wCyfYVtUEAggjIPatZwUl6GcZcrCiiirJCiiigAooooAKKKKACiuJ8T+PJvDPjHQPDsmgyXR16VoLS5S4VUDqoZg4IyvB7ZzWi/iLVLXxLpek6j4deG31FpI472K5WSNJFRnCMMAgkK2DgjigDpaK5fTPF39ofEDWfB8ukzWs+mW0V19oeRWSdJGYKVA5H3D1rqKACiiigAqMQqLlpycsyhPoBk/wBakopNXAj8lftXng4bZsI9RnI/r+dSUVn6tfz6bYtdQ2L3gXAMcbAMckAYB69amTUE5PYpJyaSNCiszRNbs9f0lNQsScHKvG/DRuOqt6GlstQvLq+ubebTWt1tyFMhlVgxIBGAOehHXFSqsJKLi7p7DcJJtPoaVFFRtcQLcC286Pz2UuItw3FR3x1x71o3YgkorM0jVxqv20fZnt3s7hrZ1dgcsADnjtzWnShNTXNHYqUXF2YUUUVRIUUUUAeO/Fozj4pfCc2wjM39qXGwSEhSfKHUjmvQNEbXX1PWT4iit0jinjNmYSWjEflDJBYD5txbNcv458HeK/EnjrwnrumS6VBa+HLp7kR3Esm+53AKQcJhOAfXrWl4r0rxx4is7TS7N9I0yye6hkvpDPLLJJCkis0aDy1ALAYyT0P40hnN3OtWnhv4z+PdfvgxttO8M2lzIF6kK85wPc4xWjaeJfHE+l6DrVvpM1+b94GvNPS2EaW8EgBLRyswJKAgnP3sHAXIw688A6nrHjrxTqGsfYW0PxBpSaS8UUz+fGi+Z8/KbcnzOmeMdTWz4c0/xhpPh7T/AA7dtp8v2CNLcaortmaJMAN5O3hyoGfmIzk89KAKMXiHX9f8U+LdL0q6g0qHw60UCGWDzTcyvEJSz5IxHgqABgn5jnoKqeFvEfjfxV4As/FVj/ZanV0t3hgljZBYLvKzuW3HzgFG5Bhc9zisnV7bxLqPivXdR0bw1p3ifT5mOnu8ery6c4WMbXgkUJtlw5f5iT94rxgirN7DqnxB+Hf9jaJp6eGL7RtThgvtGu2xC6Q7XNsXiyDE6MhBUYI4I6igDV0nxfdN8UY/CX9pQ6xY3WmSX0d2kQRo3jkVGTcvyupD5yOQRg5zxFoWs+MNb8YeM/DkuqWNtFo1zAkF3DaHftkhEgUozEZGeWJ59BUs/hbxS/xH0fxfFJpMa2+ny6bLaAyYgR5EcOjbf3hGwjBCDp71Z8NeHPEWkeNfF+u3g054dckimhiimk3RGOIRhWJTBBxkkdPQ0COdtviTqa/DUa7q6pbtaazLpOo6hbW7SR28ccrobny8kgHameoXcTyBiuw0rUbnVvDkt6+p2GqWkl1GbK8sSCk8OY8M2CRu3bwcccdBWD4T8K+MvDOjTWRm0mUzaxc6jMiu5WaGYyM0PKfKQzLhuQccjtV3QfB97oMetPpNpYadFqt8l4LBHbybbaqBtuFA3OVLHAAGR15NRO/Ky4/EhNYtpvB/iNvFOnozaVeMF1O3TnYe0yj+f/1+OntZ2lXUrqw2XBkKyQfNhX/dLt57A+tXzF9otGhvIo2EilZEB3KQeo5AzWFp3h2fStA1LSbK9aITO5tpeS0KsoAH4HNcipSpT9xe67u3Z+Xr+D9TdzjOPvfEtPVf8D8iG41fUNOvNJjnvILqW6uEtrmCOPCxFlJyrDpgjo3JFTvPOvxDgtZIrV42sXkSUQ4mTDqNu/PTvjioX0PU20rSrdRZxPp00c2xWYrKVBBJbGQTknoee9XG07UW8T2+rMbYpFbNbsoZgSSQxI49R0qEqj3vun/mVeHTs/8AgGNpt1Ppth4tvbeFppI9TkcKqljjamTgdcDJx3xW9ot+2orJPDqFvqFiVXypohht3O4MOxHy9hVaw0zVrIamySWqyXd39pQgswXJXKngZ4U8+9WbDShba1d6ksEVr9ojVHiiOQ7Ak7zwOecVVGNSLj21/N/1+QqkoNPv/wAMa9FFFegcgUUUUAFIWVcbmAzwMnrS1j67p1xqD6U9ukbfZL5Llw7Y+VVYHHB55FAGuWUHBIGOaWue1HTdV1O2vo3FvD9qsFhCht2yXcxPzbckYI/wqwltr2+28y9QRCWUyBAN+wsDGMkYOFyD659qABPD8FtdXU+m313p32uQyzRwFCjSH7zhXVtpPfGMnk8kmrWlaRZ6PbSQ2auTNK080sjFnmkOMuxPU8AewAAwABVV7TWGivD9sO9rtHhVWACwhlJXO3qRvHftzSTReIXvNQME8EULwMtruO7bJgbWI29OuRz070AbQIPQ5orM0WyuLG2uEuMbpbiSYfNuOGOeTgc1VNp4gOlQxtfA3vnKZnUqFK4wwX5eAeuDyPWgDdorNuINUm8MvbrcCPVGttvmocAS7eoOOOfamNFrH9tRSJKn2D5S6EjI+SQMOnPzGM9ex/EA1aKp6al/HZ7NSlSWYO2HQYyueMj1x/ntWVp1r4livIHvb1JYQP3ilgc/J2wo/jH5ZoA6GiueFt4mfTdkl1HHcm43ZRwcRbOVyV5O/Pbp+VWVh183do73UAiVIvPUDqQG8zt3JTHTGDQBsUVT06O/jtnXUZkml8xirKMfJngH3/z7VcoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA/9k=" alt="Logo ElegansNails">
           <div>
@@ -554,28 +688,28 @@
   <!-- ANALYTICS -->
   <section class="analytics">
     <span class="eyebrow">Analytics</span>
-    <h2>Sabes si tu tarjeta está trabajando</h2>
+    <h2 class="reveal">Sabes si tu tarjeta está trabajando</h2>
     <p>Cada vez que un cliente la toca queda registrado: cuántas veces se usó este mes y en total. Ya no adivinas si sirvió de algo — lo ves.</p>
   </section>
 
   <!-- FAQ -->
   <section class="faq">
     <span class="eyebrow">Preguntas frecuentes</span>
-    <h2>Lo que todo dueño de negocio pregunta</h2>
+    <h2 class="reveal">Lo que todo dueño de negocio pregunta</h2>
     <div class="faq-list">
-      <details class="faq-item">
+      <details class="faq-item reveal">
         <summary>¿Puedo cambiar el destino de mi tarjeta después?</summary>
         <p>Sí, en el paquete Pro. Nos escribes por WhatsApp, actualizamos el destino de tu lado y tu tarjeta ya apunta ahí — sin comprar otra ni reprogramar nada. En el Básico el destino queda fijo en tus reseñas de Google.</p>
       </details>
-      <details class="faq-item">
+      <details class="faq-item reveal">
         <summary>¿Qué pasa si cambio de sucursal o de dirección?</summary>
         <p>Nos avisas y actualizamos el destino de tu tarjeta (Pro) o la información que ve el cliente. En el Básico tocaría reemplazar la tarjeta física.</p>
       </details>
-      <details class="faq-item">
+      <details class="faq-item reveal">
         <summary>¿Cuánto tarda en llegar mi tarjeta?</summary>
         <p>En días, no semanas: en cuanto nos confirmas tus datos (logo, WhatsApp, link de reseñas) la armamos y te avisamos por WhatsApp cuando esté lista.</p>
       </details>
-      <details class="faq-item">
+      <details class="faq-item reveal">
         <summary>¿Necesito internet en mi negocio para que funcione?</summary>
         <p>No. La tarjeta usa el celular del cliente — con sus datos o el wifi que ya tengas para clientes es suficiente. No instalas nada tú.</p>
       </details>
@@ -584,26 +718,61 @@
 
   <!-- FINAL CTA -->
   <section class="final-cta">
-    <h2>¿Listo para proteger tus reseñas?</h2>
+    <h2 class="reveal">¿Listo para proteger tus reseñas?</h2>
     <p>Escríbenos por WhatsApp y te armamos tu tarjeta en días, no semanas.</p>
-    <a class="btn btn-primary" href="https://wa.me/523315849634?text=Hola%2C%20vi%20la%20p%C3%A1gina%20de%20RAVE%20y%20quiero%20cotizar%20tarjetas%20NFC%20para%20mi%20negocio" target="_blank" rel="noopener">
+    <a class="btn btn-primary" href="https://wa.me/523331954765?text=Hola%2C%20vi%20la%20p%C3%A1gina%20de%20RAVE%20y%20quiero%20cotizar%20tarjetas%20NFC%20para%20mi%20negocio" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.4c-1.3 0-2.5-.3-3.6-.8L3 20l1-5.7A8.4 8.4 0 1 1 21 11.5z"/></svg>
       Cotizar tarjeta para mi negocio
     </a>
   </section>
 
   <footer>
-    <span class="brand">RAVE</span> — Sistema de reputación digital para negocios locales.
+    <span class="brand wordmark">RAVE</span> — Sistema de reputación digital para negocios locales.
   </footer>
 
 </main>
 
-<div class="sticky-cta">
-  <a class="btn btn-primary" href="https://wa.me/523315849634?text=Hola%2C%20vi%20la%20p%C3%A1gina%20de%20RAVE%20y%20quiero%20cotizar%20tarjetas%20NFC%20para%20mi%20negocio" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.4c-1.3 0-2.5-.3-3.6-.8L3 20l1-5.7A8.4 8.4 0 1 1 21 11.5z"/></svg>
-    Cotizar tarjeta para mi negocio
-  </a>
-</div>
+<a class="wa-float" href="https://wa.me/523331954765?text=Hola%2C%20vi%20la%20p%C3%A1gina%20de%20RAVE%20y%20quiero%20cotizar%20tarjetas%20NFC%20para%20mi%20negocio" target="_blank" rel="noopener" aria-label="Cotizar por WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.001 2c-5.523 0-10 4.477-10 10 0 1.769.466 3.518 1.352 5.06L2 22l5.062-1.328A9.958 9.958 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.062a8.06 8.06 0 0 1-4.099-1.119l-.294-.174-3.045.799.813-2.965-.192-.304A8.06 8.06 0 1 1 12 20.062z"/></svg>
+</a>
 
+<script>
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var revealIO = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        revealIO.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+  document.querySelectorAll('.reveal').forEach(function (el) { revealIO.observe(el); });
+
+  var counter = document.querySelector('[data-count-to]');
+  if (counter && !reduceMotion) {
+    var counterIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var target = parseInt(entry.target.getAttribute('data-count-to'), 10);
+        var start = performance.now();
+        var dur = 700;
+        entry.target.textContent = '0';
+        function tick(now) {
+          var p = Math.min((now - start) / dur, 1);
+          entry.target.textContent = Math.round(p * target);
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        counterIO.unobserve(entry.target);
+      });
+    }, { threshold: 0.6 });
+    counterIO.observe(counter);
+  }
+})();
+</script>
 </body>
 </html>
