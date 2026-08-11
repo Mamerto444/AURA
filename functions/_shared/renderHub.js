@@ -77,12 +77,12 @@ function renderWifiButton(btn) {
           <span class="wifi-chevron" aria-hidden="true">${renderIcon('chevron-down')}</span>
         </summary>
         <div class="wifi-panel">
-          <div class="wifi-qr">${svg}</div>
           <p class="wifi-network">Red: <strong>${escapeHtml(ssid)}</strong></p>
           <div class="wifi-pass-row">
             <code class="wifi-pass">${escapeHtml(password)}</code>
             <button type="button" class="wifi-copy-btn" data-copy="${escapeHtml(password)}">Copiar</button>
           </div>
+          <div class="wifi-qr">${svg}</div>
           <p class="wifi-hint">Apunta la cámara de tu celular al código y toca "Unirse a la red". O copia la contraseña y conéctate desde Ajustes → Wi-Fi.</p>
         </div>
       </details>`;

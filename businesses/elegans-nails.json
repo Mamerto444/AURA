@@ -51,8 +51,8 @@
       "url": "https://elegansnails.com/"
     },
     {
-      "label": "Conectar WiFi",
-      "subtitle": "Red y contraseña en un toque",
+      "label": "Conéctate a WiFi",
+      "subtitle": "Copia la contraseña en un toque",
       "icon": "wifi",
       "wifi": {
         "ssid": "IINFINITUM0EE4",
