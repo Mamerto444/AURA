@@ -49,6 +49,17 @@
       "subtitle": "Compra nuestros productos",
       "icon": "globe",
       "url": "https://elegansnails.com/"
+    },
+    {
+      "label": "Conéctate a WiFi",
+      "subtitle": "Copia la contraseña en un toque",
+      "icon": "wifi",
+      "wifi": {
+        "ssid": "INFINITUM83A2_2.4",
+        "password": "3331241320",
+        "encryption": "WPA",
+        "qrImage": "/assets/elegans-nails/wifi-qr-parian.png.png"
+      }
     }
   ]
 }
