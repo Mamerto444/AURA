@@ -49,6 +49,17 @@
       "subtitle": "Compra nuestros productos",
       "icon": "globe",
       "url": "https://elegansnails.com/"
+    },
+    {
+      "label": "Conectar WiFi",
+      "subtitle": "Red y contraseña en un toque",
+      "icon": "wifi",
+      "wifi": {
+        "ssid": "IINFINITUM0EE4",
+        "password": "HkgRsxT9wb",
+        "encryption": "WPA",
+        "qrImage": "/assets/elegans-nails/wifi-qr.jpg.png"
+      }
     }
   ]
 }

@@ -13,4 +13,6 @@ export const icons = {
   instagram: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none"/>',
   link: '<path d="M9.5 14.5l5-5M8 17H6a4 4 0 0 1 0-8h2m8 0h2a4 4 0 0 1 0 8h-2"/>',
   tiktok: '<path d="M15 3v10.5a4 4 0 1 1-3-3.9"/><path d="M15 3c.3 2.7 2.2 4.7 5 5"/>',
+  wifi: '<path d="M4 8.5a13 13 0 0 1 16 0"/><path d="M7 12a8.5 8.5 0 0 1 10 0"/><path d="M10 15.5a4 4 0 0 1 4 0"/><circle cx="12" cy="19" r="1" fill="currentColor" stroke="none"/>',
+  'chevron-down': '<path d="M6 9l6 6 6-6"/>',
 };

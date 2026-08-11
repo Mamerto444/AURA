@@ -1,5 +1,6 @@
 import { icons } from './icons.js';
 import { resolveTheme } from './themes.js';
+import { qrcode } from './qrcode-gen.js';
 
 const SOCIAL_ICON_BY_KEY = {
   instagram: 'instagram',
@@ -20,11 +21,16 @@ function renderIcon(name) {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
 }
 
+function externalAttrs(url) {
+  return url.startsWith('/') ? '' : ' target="_blank" rel="noopener"';
+}
+
 function renderButton(btn) {
+  if (btn.wifi) return renderWifiButton(btn);
   const highlightClass = btn.highlight ? ' btn-highlight' : '';
   const highlightStyle = btn.highlight ? ` style="background:var(--accent);"` : '';
   return `
-      <a class="btn${highlightClass}" href="${escapeHtml(btn.url)}"${highlightStyle}>
+      <a class="btn${highlightClass}" href="${escapeHtml(btn.url)}"${highlightStyle}${externalAttrs(btn.url)}>
         <span class="btn-icon" aria-hidden="true">${renderIcon(btn.icon)}</span>
         <span class="btn-text">
           <span class="btn-label">${escapeHtml(btn.label)}</span>
@@ -33,9 +39,58 @@ function renderButton(btn) {
       </a>`;
 }
 
+function wifiEscape(str = '') {
+  return String(str).replace(/([\\;,:"])/g, '\\$1');
+}
+
+function renderWifiQrSvg({ ssid, password, encryption = 'WPA' }) {
+  const payload = `WIFI:T:${encryption};S:${wifiEscape(ssid)};P:${wifiEscape(password)};;`;
+  const qr = qrcode(0, 'M');
+  qr.addData(payload);
+  qr.make();
+  const count = qr.getModuleCount();
+  let cells = '';
+  for (let r = 0; r < count; r += 1) {
+    for (let c = 0; c < count; c += 1) {
+      if (qr.isDark(r, c)) cells += `<rect x="${c}" y="${r}" width="1" height="1"/>`;
+    }
+  }
+  return `<svg viewBox="0 0 ${count} ${count}" class="wifi-qr-svg" role="img" aria-label="Código QR para conectarte al WiFi">
+    <rect x="0" y="0" width="${count}" height="${count}" fill="#fff"/>
+    <g fill="#000">${cells}</g>
+  </svg>`;
+}
+
+function renderWifiButton(btn) {
+  const { ssid, password, encryption, qrImage } = btn.wifi;
+  const svg = qrImage
+    ? `<img src="${escapeHtml(qrImage)}" alt="Código QR para conectarte al WiFi" class="wifi-qr-svg">`
+    : renderWifiQrSvg({ ssid, password, encryption });
+  return `
+      <details class="wifi-item">
+        <summary class="btn">
+          <span class="btn-icon" aria-hidden="true">${renderIcon(btn.icon || 'wifi')}</span>
+          <span class="btn-text">
+            <span class="btn-label">${escapeHtml(btn.label)}</span>
+            ${btn.subtitle ? `<span class="btn-subtitle">${escapeHtml(btn.subtitle)}</span>` : ''}
+          </span>
+          <span class="wifi-chevron" aria-hidden="true">${renderIcon('chevron-down')}</span>
+        </summary>
+        <div class="wifi-panel">
+          <div class="wifi-qr">${svg}</div>
+          <p class="wifi-network">Red: <strong>${escapeHtml(ssid)}</strong></p>
+          <div class="wifi-pass-row">
+            <code class="wifi-pass">${escapeHtml(password)}</code>
+            <button type="button" class="wifi-copy-btn" data-copy="${escapeHtml(password)}">Copiar</button>
+          </div>
+          <p class="wifi-hint">Apunta la cámara de tu celular al código y toca "Unirse a la red". O copia la contraseña y conéctate desde Ajustes → Wi-Fi.</p>
+        </div>
+      </details>`;
+}
+
 function renderSocial(key, url) {
   const iconName = SOCIAL_ICON_BY_KEY[key] || 'link';
-  return `<a class="social" href="${escapeHtml(url)}" aria-label="${escapeHtml(key)}">${renderIcon(iconName)}</a>`;
+  return `<a class="social" href="${escapeHtml(url)}" aria-label="${escapeHtml(key)}"${externalAttrs(url)}>${renderIcon(iconName)}</a>`;
 }
 
 function renderHero(business) {
@@ -88,9 +143,39 @@ export function renderHub(business) {
   const accent = business.accentColor || '#6C5CE7';
   const theme = resolveTheme(business);
   const hasHero = !!(business.heroImage || business.heroGradient);
+  const hasWifiButton = (business.buttons || []).some((b) => b.wifi);
   const buttonsHtml = (business.buttons || []).map(renderButton).join('\n');
   const galleryHtml = renderGallery(business.gallery);
   const heroHtml = renderHero(business);
+  const wifiScript = hasWifiButton ? `
+<script>
+document.querySelectorAll('.wifi-copy-btn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var text = btn.getAttribute('data-copy');
+    var copyPromise = (navigator.clipboard && navigator.clipboard.writeText)
+      ? navigator.clipboard.writeText(text)
+      : Promise.reject(new Error('no-clipboard-api'));
+    copyPromise.catch(function () {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+    }).then(function () {
+      var original = btn.textContent;
+      btn.textContent = 'Copiado';
+      btn.disabled = true;
+      setTimeout(function () {
+        btn.textContent = original;
+        btn.disabled = false;
+      }, 1500);
+    });
+  });
+});
+</script>` : '';
 
   return `<!DOCTYPE html>
 <html lang="es">
@@ -254,6 +339,40 @@ export function renderHub(business) {
   .btn-subtitle { font-size: 13px; color: var(--text-muted); }
   .btn-highlight .btn-subtitle { color: rgba(255,255,255,0.85); }
 
+  /* ── WIFI (panel expandible) ── */
+  .wifi-item summary { list-style: none; cursor: pointer; }
+  .wifi-item summary::-webkit-details-marker { display: none; }
+  .wifi-chevron {
+    width: 18px; height: 18px; flex-shrink: 0; margin-left: auto;
+    color: var(--text-muted); transition: transform 200ms ease;
+  }
+  .wifi-item[open] .wifi-chevron { transform: rotate(180deg); }
+  .wifi-item[open] summary.btn { border-radius: var(--radius) var(--radius) 0 0; border-bottom: none; }
+  .wifi-panel {
+    background: var(--bg-elevated); border: 1px solid var(--border); border-top: none;
+    border-radius: 0 0 var(--radius) var(--radius);
+    padding: 18px 16px 20px; text-align: center;
+  }
+  .wifi-qr {
+    width: 168px; height: 168px; margin: 0 auto 14px;
+    padding: 10px; background: #fff; border-radius: 12px;
+  }
+  .wifi-qr-svg { width: 100%; height: 100%; display: block; object-fit: contain; shape-rendering: crispEdges; }
+  .wifi-network { font-size: 13px; color: var(--text-muted); margin: 0 0 10px; }
+  .wifi-network strong { color: var(--text-primary); }
+  .wifi-pass-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px; }
+  .wifi-pass {
+    font-family: ui-monospace, 'SF Mono', monospace; font-size: 15px; letter-spacing: 0.5px;
+    background: var(--bg-deep); border: 1px solid var(--border); border-radius: 8px;
+    padding: 6px 10px; color: var(--text-primary);
+  }
+  .wifi-copy-btn {
+    border: none; background: var(--accent); color: #fff; font-weight: 600; font-size: 13px;
+    padding: 7px 14px; border-radius: 8px; cursor: pointer;
+  }
+  .wifi-copy-btn:active { transform: scale(0.96); }
+  .wifi-hint { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin: 0; }
+
   footer { text-align: center; margin-top: 36px; }
   footer a { color: var(--text-muted); font-size: 12px; text-decoration: none; font-weight: 600; }
 
@@ -270,7 +389,7 @@ export function renderHub(business) {
     ${buttonsHtml}
   </div>
   <footer><a href="/" target="_blank" rel="noopener">Hecho by RAVE</a></footer>
-</main>
+</main>${wifiScript}
 </body>
 </html>`;
 }
