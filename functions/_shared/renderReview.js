@@ -108,6 +108,7 @@ export function renderReview(business, slug) {
 
   <div class="branch" id="negative-branch" hidden>
     <p>Gracias por tu calificación. Tu opinión nos ayuda a seguir mejorando.</p>
+    <a class="btn" id="hub-link" href="/hub/${slug}">Volver al menú</a>
   </div>
 </main>
 <script>
@@ -119,6 +120,7 @@ export function renderReview(business, slug) {
   var positive = document.getElementById('positive-branch');
   var negative = document.getElementById('negative-branch');
   var googleLink = document.getElementById('google-link');
+  var hubLink = document.getElementById('hub-link');
 
   stars.forEach(function (btn) {
     btn.addEventListener('click', function () {
@@ -134,12 +136,13 @@ export function renderReview(business, slug) {
         positive.hidden = false;
         if (GOOGLE_URL) {
           googleLink.href = GOOGLE_URL;
-          setTimeout(function () { window.location.href = GOOGLE_URL; }, 900);
+          setTimeout(function () { window.location.href = GOOGLE_URL; }, 500);
         }
       } else {
         navigator.sendBeacon('/track/' + SLUG + '?type=negative');
         positive.hidden = true;
         negative.hidden = false;
+        setTimeout(function () { window.location.href = hubLink.href; }, 2500);
       }
     });
   });
