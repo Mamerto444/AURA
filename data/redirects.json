@@ -2,5 +2,7 @@
   "klei-barberia": { "type": "hub" },
   "starbucks": { "type": "hub" },
   "elegans-nails": { "type": "hub" },
-  "elegans-nails-parian": { "type": "hub" }
+  "elegans-nails-parian": { "type": "hub" },
+  "bisuteria-elegans": { "type": "hub" },
+  "brillarte-accesorios": { "type": "hub" }
 }

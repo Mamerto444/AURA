@@ -1,0 +1,48 @@
+{
+  "name": "Bisutería Elegans",
+  "tagline": "Cosméticos y accesorios con estilo",
+  "logo": "/assets/bisuteria-elegans/logo.png",
+  "logoShape": "wordmark",
+  "accentColor": "#4A4A57",
+  "theme": "light",
+  "googleReviewUrl": "https://search.google.com/local/writereview?placeid=ChIJJ_JFnfGxKIQRqD4lM_yymzQ",
+  "ownerWhatsapp": "+523321661939",
+  "socials": {
+    "instagram": "https://www.instagram.com/eleparian/",
+    "tiktok": "https://www.tiktok.com/@ele.gans.parian",
+    "whatsapp": "https://wa.me/523321661939?text=Hola%2C%20me%20gustar%C3%ADa%20conocer%20sus%20productos%20de%20cosm%C3%A9ticos%20y%20accesorios%20%E2%9C%A8"
+  },
+  "buttons": [
+    {
+      "label": "Dejar una reseña",
+      "subtitle": "Tu opinión nos ayuda mucho",
+      "icon": "star",
+      "url": "/review/bisuteria-elegans",
+      "highlight": true
+    },
+    {
+      "label": "WhatsApp",
+      "subtitle": "Escríbenos directo",
+      "icon": "chat",
+      "url": "https://wa.me/523321661939?text=Hola%2C%20me%20gustar%C3%ADa%20conocer%20sus%20productos%20de%20cosm%C3%A9ticos%20y%20accesorios%20%E2%9C%A8"
+    },
+    {
+      "label": "Instagram",
+      "subtitle": "Contenido que te va a enamorar",
+      "icon": "instagram",
+      "url": "https://www.instagram.com/eleparian/"
+    },
+    {
+      "label": "TikTok",
+      "subtitle": "No te pierdas nuestros videos",
+      "icon": "tiktok",
+      "url": "https://www.tiktok.com/@ele.gans.parian"
+    },
+    {
+      "label": "Cómo llegar",
+      "subtitle": "Ver en Google Maps",
+      "icon": "map-pin",
+      "url": "https://maps.app.goo.gl/69NFXVReXHCsqXXx8"
+    }
+  ]
+}

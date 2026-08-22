@@ -121,10 +121,11 @@ function renderHero(business) {
   </div>`;
   }
 
-  // Sin hero: perfil clásico con avatar circular
+  // Sin hero: perfil clásico con avatar circular (o wordmark completo si el logo es un lockup ancho)
+  const avatarClass = business.logoShape === 'wordmark' ? 'avatar avatar-wordmark' : 'avatar';
   return `
   <div class="profile">
-    ${business.logo ? `<img class="avatar" src="${escapeHtml(business.logo)}" alt="${escapeHtml(business.name)}">` : ''}
+    ${business.logo ? `<img class="${avatarClass}" src="${escapeHtml(business.logo)}" alt="${escapeHtml(business.name)}">` : ''}
     <h1>${escapeHtml(business.name)}</h1>
     ${business.tagline ? `<p class="tagline">${escapeHtml(business.tagline)}</p>` : ''}
     ${socialsHtml ? `<div class="socials">${socialsHtml}</div>` : ''}
@@ -270,6 +271,12 @@ document.querySelectorAll('.wifi-copy-btn').forEach(function (btn) {
     object-fit: cover; margin: 0 auto 14px; display: block;
     border: 2px solid var(--border);
     background: var(--bg-elevated);
+  }
+  .avatar.avatar-wordmark {
+    width: min(220px, 80%); height: auto; max-height: 120px;
+    border-radius: 14px; object-fit: contain;
+    border: none; background: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.18);
   }
   h1 { font-size: 20px; font-weight: 700; margin: 0 0 4px; }
   .tagline { color: var(--text-muted); font-size: 14px; margin: 0 0 14px; line-height: 1.5; }

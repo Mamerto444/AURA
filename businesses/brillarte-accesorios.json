@@ -1,0 +1,55 @@
+{
+  "name": "Brillarte Accesorios",
+  "tagline": "Accesorios con brillo propio",
+  "logo": "/assets/brillarte-accesorios/logo.png",
+  "logoShape": "wordmark",
+  "accentColor": "#C9A27E",
+  "theme": "dark",
+  "googleReviewUrl": "PLACE_ID_AQUI",
+  "ownerWhatsapp": "+523312439216",
+  "socials": {
+    "instagram": "https://www.instagram.com/brillarte1031/",
+    "tiktok": "https://www.tiktok.com/@brillarte76",
+    "facebook": "https://www.facebook.com/profile.php?id=61587916541736",
+    "whatsapp": "https://wa.me/523312439216?text=Hola%2C%20me%20gustar%C3%ADa%20conocer%20sus%20accesorios%20%E2%9C%A8"
+  },
+  "buttons": [
+    {
+      "label": "Dejar una reseña",
+      "subtitle": "Tu opinión nos ayuda mucho",
+      "icon": "star",
+      "url": "/review/brillarte-accesorios",
+      "highlight": true
+    },
+    {
+      "label": "WhatsApp",
+      "subtitle": "Escríbenos directo",
+      "icon": "chat",
+      "url": "https://wa.me/523312439216?text=Hola%2C%20me%20gustar%C3%ADa%20conocer%20sus%20accesorios%20%E2%9C%A8"
+    },
+    {
+      "label": "Instagram",
+      "subtitle": "Contenido que te va a enamorar",
+      "icon": "instagram",
+      "url": "https://www.instagram.com/brillarte1031/"
+    },
+    {
+      "label": "TikTok",
+      "subtitle": "No te pierdas nuestros videos",
+      "icon": "tiktok",
+      "url": "https://www.tiktok.com/@brillarte76"
+    },
+    {
+      "label": "Facebook",
+      "subtitle": "Síguenos para novedades",
+      "icon": "facebook",
+      "url": "https://www.facebook.com/profile.php?id=61587916541736"
+    },
+    {
+      "label": "Cómo llegar",
+      "subtitle": "Ver en Google Maps",
+      "icon": "map-pin",
+      "url": "https://maps.app.goo.gl/Tgkswg7fELyLc2xRA"
+    }
+  ]
+}

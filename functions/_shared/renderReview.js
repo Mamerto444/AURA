@@ -104,6 +104,7 @@ export function renderReview(business, slug) {
       ? `<p>¡Qué gusto! Te llevamos a dejar tu reseña en Google…</p>
     <a class="btn" id="google-link" href="${escapeHtml(googleUrl)}">Ir a Google ahora</a>`
       : `<p>¡Qué gusto! Gracias por contarnos cómo te fue.</p>`}
+    <a class="secondary-link" href="/hub/${slug}">Volver al menú</a>
   </div>
 
   <div class="branch" id="negative-branch" hidden>
