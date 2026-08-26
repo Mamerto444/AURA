@@ -10,6 +10,7 @@
   "socials": {
     "instagram": "https://www.instagram.com/eleparian/",
     "tiktok": "https://www.tiktok.com/@ele.gans.parian",
+    "facebook": "https://www.facebook.com/ele.gan.s.parian",
     "whatsapp": "https://wa.me/523321661939?text=Hola%2C%20me%20gustar%C3%ADa%20conocer%20sus%20productos%20de%20cosm%C3%A9ticos%20y%20accesorios%20%E2%9C%A8"
   },
   "buttons": [
@@ -37,6 +38,12 @@
       "subtitle": "No te pierdas nuestros videos",
       "icon": "tiktok",
       "url": "https://www.tiktok.com/@ele.gans.parian"
+    },
+    {
+      "label": "Facebook",
+      "subtitle": "Síguenos para novedades",
+      "icon": "facebook",
+      "url": "https://www.facebook.com/ele.gan.s.parian"
     },
     {
       "label": "Cómo llegar",
