@@ -273,7 +273,7 @@ document.querySelectorAll('.wifi-copy-btn').forEach(function (btn) {
     background: var(--bg-elevated);
   }
   .avatar.avatar-wordmark {
-    width: min(220px, 80%); height: auto; max-height: 120px;
+    width: min(220px, 80%); height: auto; max-height: 260px;
     border-radius: 14px; object-fit: contain;
     border: none; background: none;
     box-shadow: 0 6px 20px rgba(0,0,0,0.18);
