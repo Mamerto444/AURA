@@ -385,7 +385,8 @@ document.querySelectorAll('.wifi-copy-btn').forEach(function (btn) {
   .wifi-hint { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin: 0; }
 
   footer { text-align: center; margin-top: 36px; }
-  footer a { color: var(--text-muted); font-size: 12px; text-decoration: none; font-weight: 600; }
+  footer a { color: var(--text-muted); font-size: 12px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+  footer .footer-logo { height: 13px; width: auto; display: block; }
 
   @media (prefers-reduced-motion: reduce) {
     .btn, .social { transition: none; }
@@ -399,7 +400,7 @@ document.querySelectorAll('.wifi-copy-btn').forEach(function (btn) {
   <div class="buttons">
     ${buttonsHtml}
   </div>
-  <footer><a href="/" target="_blank" rel="noopener">Hecho by TapGo</a></footer>
+  <footer><a href="/" target="_blank" rel="noopener">Hecho by <img class="footer-logo" src="/assets/tapgo/logo-${theme.colorScheme === 'dark' ? 'white' : 'black'}.png" width="637" height="240" alt="TapGo"></a></footer>
 </main>${wifiScript}
 </body>
 </html>`;
