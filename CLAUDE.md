@@ -1,11 +1,11 @@
-# Proyecto: Sistema NFC para negocios (RAVE)
+# Proyecto: Sistema NFC para negocios (TapGo)
 
-**Nota de marca:** el nombre visible al cliente es **RAVE** (iniciales de Alfredo). La
-infraestructura técnica (repo GitHub `Mamerto444/AURA`, proyecto Cloudflare Pages `aura`, dominio
-`aura-dre.pages.dev`) sigue usando "aura" internamente — no se renombró porque eso implicaría
-mover el dominio y romper las URLs ya grabadas en las tarjetas NFC de Klei Barbería y
-ElegansNails, que están en producción. Todo el copy visible (landing, footer de los hubs,
-dashboard de stats) ya dice "RAVE".
+**Nota de marca:** el nombre visible al cliente es **TapGo** (antes RAVE, antes de eso AURA,
+antes de eso FlowPages). La infraestructura técnica (repo GitHub `Mamerto444/AURA`, proyecto
+Cloudflare Pages `aura`, dominio `aura-dre.pages.dev`) sigue usando "aura" internamente — no se
+renombró porque eso implicaría mover el dominio y romper las URLs ya grabadas en las tarjetas NFC
+de Klei Barbería y ElegansNails, que están en producción. Todo el copy visible (landing, footer
+de los hubs, dashboard de stats) ya dice "TapGo". Cuenta de Instagram de la marca: **@tapgo_mx**.
 
 ## ⚠️ Estado actual de la implementación (leer primero)
 
@@ -16,8 +16,9 @@ concurrente sin avisar.** Si trabajas desde otra pestaña/sesión al mismo tiemp
 Ya construido y probado localmente (`npx wrangler pages dev .` en puerto 8788):
 
 - **Router** (`functions/r/[slug].js`): lee `data/redirects.json`. Cada entrada es
-  `{ "type": "hub" }` (redirige a `/hub/[slug]`) o `{ "type": "direct", "url": "..." }`
-  (redirect directo, nivel Básico, sin hub).
+  `{ "type": "hub" }` (redirige a `/hub/[slug]`), `{ "type": "direct", "url": "..." }`
+  (redirect directo a una URL ya asignada, ej. Básico activado), o `{ "type": "pending" }`
+  (redirect a `/pendiente.html` — código del pool de Básico aún no vendido, ver "Pieza 4").
 - **Hub** (`functions/hub/[slug].js` + `functions/_shared/renderHub.js`): lee
   `businesses/[slug].json` vía `env.ASSETS.fetch` (binding automático de Pages Functions a los
   assets estáticos del propio sitio) y renderiza la landing tipo Beacons. Soporta dos modos según
@@ -44,13 +45,27 @@ Ya construido y probado localmente (`npx wrangler pages dev .` en puerto 8788):
   protegido por query param `key`.
 - Klei Barbería ya tiene datos reales completos (WhatsApp, Maps, Place ID, logo propio en
   `assets/klei-barberia/`) — ya no hay placeholders pendientes ahí.
+- **Panel de WiFi en el hub** (agregado 2026-08-11 — ver "Pieza 3" más abajo): un botón más en
+  `buttons[]` con un objeto `wifi: { ssid, password, encryption, qrImage? }` en vez de `url`.
+  `renderHub.js` lo detecta y renderiza un panel expandible (`<details>`) con el nombre de la
+  red, la contraseña con botón de copiar, y un QR — generado en el servidor con la librería
+  vendorizada `functions/_shared/qrcode-gen.js` (MIT, kazuhikoarase, sin llamadas a terceros) si
+  no se da `qrImage`, o la imagen que suba el cliente si sí se da. Ya está activo en ambas
+  sucursales de ElegansNails, cada una con su propia red/imagen — no hay riesgo de mezclarlas
+  porque cada slug lee su propio JSON.
 - **Repo conectado a GitHub** (`github.com/Mamerto444/AURA`) y **desplegado en Cloudflare
   Pages**: `https://aura-dre.pages.dev`. El nombre del proyecto en `wrangler.toml` es `aura`.
+- **Pool de códigos genéricos para Básico** (agregado 2026-08-11 — ver "Pieza 4" más abajo): 20
+  slugs pre-generados tipo `rv-xxxx` en `data/redirects.json`, todos con `{ "type": "pending" }`,
+  pensados para grabarse en tarjetas físicas en lote *antes* de tener cliente. Mientras un código
+  no se asigna, `/r/[código]` manda a `pendiente.html` (landing "tarjeta aún no activada" con CTA
+  de WhatsApp). Activar un código = cambiar su entrada a `{ "type": "direct", "url": "..." }` con
+  el `googleReviewUrl` real del negocio y hacer commit/push — no requiere tocar la tarjeta física.
 
 **Pendiente / próximos pasos:**
-- Definir si negocios nivel Básico (`type: "direct"`) se van a usar pronto o si por ahora todos
-  arrancan en Pro/Premium con hub.
 - Subir logo real de ElegansNails (sigue usando placeholder según la tabla de negocios activos).
+- Completar `googleReviewUrl` real de la sucursal Parián (`elegans-nails-parian.json` sigue con
+  el placeholder `PLACE_ID_AQUI`).
 - Confirmar si `aura-dre.pages.dev` es el dominio final para grabar en chips NFC / imprimir QRs,
   o si se va a conectar un dominio propio más adelante.
 
@@ -138,7 +153,7 @@ Formato completo del JSON:
 ```
 
 **Iconos disponibles:** `star`, `chat`, `map-pin`, `camera`, `globe`, `music`, `link`, `calendar`,
-`instagram`, `facebook`, `tiktok`, `phone`, `mail`, `gift`
+`instagram`, `facebook`, `tiktok`, `phone`, `mail`, `gift`, `wifi`
 
 **Tema visual:** `theme` acepta `"dark"` (default, fondo negro `#0a0a0c`) o `"light"` (fondo
 cálido `#faf7f2`, texto oscuro) — ambos definidos en `functions/_shared/themes.js`. Elegir según
@@ -203,18 +218,24 @@ https://images.unsplash.com/photo-[ID]?w=400&q=80   ← galería (cuadradas)
 NFC PLAN/
 ├── businesses/          ← un JSON por negocio
 │   ├── klei-barberia.json
-│   └── starbucks.json
+│   ├── starbucks.json
+│   ├── elegans-nails.json         ← sucursal Vicente Guerrero
+│   └── elegans-nails-parian.json  ← sucursal El Parián
 ├── data/
 │   └── redirects.json   ← registra qué slugs existen y su tipo
+├── assets/
+│   └── [slug]/           ← logos e imágenes propias de cada negocio (ej. QR de WiFi)
 ├── functions/
 │   ├── r/[slug].js      ← router de redirect rápido
 │   ├── hub/[slug].js    ← sirve la landing hub del negocio
 │   ├── review/[slug].js ← sirve el funnel de reseñas
 │   └── _shared/
-│       ├── renderHub.js    ← genera HTML del hub (soporta hero + galería)
+│       ├── renderHub.js    ← genera HTML del hub (soporta hero + galería + panel WiFi)
 │       ├── renderReview.js ← genera HTML del funnel de reseñas
-│       └── icons.js        ← SVG paths de iconos
-└── index.html           ← página de inicio del dominio
+│       ├── icons.js        ← SVG paths de iconos
+│       └── qrcode-gen.js   ← librería QR vendorizada (MIT), usada por el panel de WiFi
+├── index.html            ← página de inicio del dominio
+└── pendiente.html        ← landing para códigos del pool Básico aún no activados (ver Pieza 4)
 ```
 
 **Rutas activas por negocio:**
@@ -276,10 +297,107 @@ En vez de mandar a todos directo a Google, primero se pregunta cómo fue la expe
 
 ---
 
+## Pieza 3: Panel de "Conéctate a WiFi" en el hub
+
+### El problema que resuelve
+Un link web (el hub) no puede conectar automáticamente el WiFi del celular de quien lo visita —
+eso solo existe si se graba un chip NFC *dedicado* con un registro nativo de WiFi (no una URL), y
+ni así funciona en iPhone. Como el chip que graba Alfredo ya lleva la URL del router
+(`aura-dre.pages.dev/r/[slug]`), esa vía no aplica.
+
+### La solución implementada
+Un botón más en `buttons[]` del JSON del negocio, con un objeto `wifi` en vez de `url`:
+
+```json
+{
+  "label": "Conéctate a WiFi",
+  "subtitle": "Copia la contraseña en un toque",
+  "icon": "wifi",
+  "wifi": {
+    "ssid": "NombreDeLaRed",
+    "password": "contraseña",
+    "encryption": "WPA",
+    "qrImage": "/assets/[slug]/wifi-qr.png"
+  }
+}
+```
+
+- `qrImage` es **opcional**. Si no se da, `renderHub.js` genera el QR en el servidor con
+  `functions/_shared/qrcode-gen.js` (SVG, sin llamadas a terceros, sin JS del lado del cliente).
+  Si el cliente manda su propia foto/captura del QR del router, se guarda en
+  `assets/[slug]/algún-nombre.png` y se referencia ahí — se usa esa imagen tal cual en vez de
+  generar una.
+- El botón se renderiza como un `<details>` que expande un panel con: nombre de red, contraseña
+  con botón "Copiar" (Clipboard API con fallback a `execCommand`), y el QR debajo (orden acordado
+  con Alfredo: Red → Contraseña → QR).
+- Apuntar la cámara nativa del celular (no la del navegador) al QR ofrece "Unirse a la red" sin
+  escribir nada — es el método más cercano a "un toque" que existe sin chip NFC dedicado.
+- Cada sucursal/negocio tiene su propio JSON con su propia red — no hay riesgo de que un QR o
+  contraseña de una sucursal aparezca en el hub de otra.
+
+### Cómo agregarlo a un negocio nuevo
+1. Pedir SSID y contraseña de la red (y, si el cliente tiene una foto del QR de su router,
+   pedirla también — si no, se genera automático).
+2. Si hay imagen, guardarla en `assets/[slug]/` con nombre descriptivo.
+3. Agregar el botón `wifi` al JSON del negocio (normalmente al final de `buttons[]`, salvo que
+   Alfredo pida otro orden).
+4. Probar en local (`wrangler pages dev`) antes de hacer commit/push.
+
+---
+
+## Pieza 4: Pool de tarjetas Básico pre-fabricadas (venta en frío, entrega inmediata)
+
+### El problema que resuelve
+Para el paquete Básico ($400, sin hub, redirect directo a reseñas), fabricar/imprimir un QR
+distinto por cada cliente significa no poder cerrar una venta en frío en el momento — hay que
+esperar a mandar a hacer la tarjeta con el destino ya grabado, típicamente 1-2 días.
+
+### La solución implementada
+El chip NFC de Básico **también** lleva grabada una URL de router (`aura-dre.pages.dev/r/[código]`),
+igual que Pro — la diferencia de nivel es que Básico no tiene hub, solo redirect directo. Eso
+permite pre-fabricar un lote de tarjetas con códigos genéricos *antes* de tener cliente:
+
+1. Se generan slugs cortos aleatorios tipo `rv-x7k9` (formato `rv-` + 4 caracteres alfanuméricos,
+   evitando caracteres ambiguos como `0/o`, `1/l/i`) y se registran en `data/redirects.json` como
+   `{ "type": "pending" }`.
+2. Ese lote se manda a grabar/imprimir de una sola vez (más barato por volumen que uno por uno).
+3. Mientras un código no se vende, `/r/[código]` redirige a `/pendiente.html` — landing con marca
+   TapGo que dice "esta tarjeta aún no está activada" + botón de WhatsApp (por si alguien la
+   escanea antes de tiempo, es un lead entrante gratis).
+4. Al cerrar una venta: Alfredo toma una tarjeta ya fabricada del inventario, cambia su entrada en
+   `data/redirects.json` de `{ "type": "pending" }` a `{ "type": "direct", "url": "<googleReviewUrl
+   del negocio>" }`, hace commit + push a GitHub — Cloudflare Pages redeploya solo. Menos de 5
+   minutos, cero reimpresión, cero regrabado del chip.
+
+### Lote inicial (2026-08-11)
+20 códigos generados y cargados en `data/redirects.json`, todos `pending`: `rv-v4b3`, `rv-5gvw`,
+`rv-rsqk`, `rv-xq5m`, `rv-ydnb`, `rv-hvjw`, `rv-hrz8`, `rv-anp4`, `rv-hrnq`, `rv-b8je`, `rv-5gt5`,
+`rv-ys4m`, `rv-gw25`, `rv-rzy9`, `rv-kuhh`, `rv-drqx`, `rv-g25p`, `rv-puwf`, `rv-brrd`, `rv-y5uh`.
+Ninguno está grabado en tarjeta física todavía ni asignado a cliente — eso lo hace Alfredo fuera
+de este repo (grabado con app tipo "NFC Tools" + impresión del QR correspondiente a cada URL
+`aura-dre.pages.dev/r/[código]`).
+
+### Nota importante sobre el pitch de venta
+Técnicamente nada impide reactivar/cambiar el destino de un código Básico ya vendido (sigue
+siendo solo JSON) — pero el paquete se vende como "destino fijo, sin actualización" para que la
+diferencia con Pro (que sí paga por poder cambiar el destino) tenga sentido comercial. Es una
+regla de proceso interno, no una limitación técnica.
+
+### Cómo activar un código del pool
+1. Elegir un código `pending` disponible de `data/redirects.json` (o generar más si el lote se
+   agota — mismo formato `rv-xxxx`).
+2. Pedir al cliente su `googleReviewUrl` real (link de "escribir reseña" de Google).
+3. Cambiar su entrada a `{ "type": "direct", "url": "<link>" }` en `data/redirects.json`.
+4. Commit + push. Confirmar a Alfredo qué código quedó asignado a qué negocio (para que sepa qué
+   tarjeta física entregar).
+
+---
+
 ## Empaquetado y precios (vigente — reflejado en `index.html`)
 
 1. **Básico — $400 MXN pago único**: tarjeta NFC física + redirect directo a reseñas de Google
-   (sin router propio, sin hub).
+   (sin hub). Usa el mismo router que Pro por dentro (ver "Pieza 4"), pero al cliente se le vende
+   como destino fijo, sin panel de actualización.
 2. **Pro — $800 MXN pago único**: router propio (destino actualizable sin comprar otra tarjeta) +
    landing hub con fotos/galería + WhatsApp/redes + funnel inteligente de reseñas + contador de
    escaneos.
@@ -297,13 +415,48 @@ pago único, para bajar la fricción de la primera venta.
 |------|---------|--------|
 | `klei-barberia` | Klei Barbería | ✅ Activo |
 | `starbucks` | Starbucks (demo) | 🎯 Demo |
-| `elegans-nails` | ElegansNails | ✅ Activo (falta subir logo) |
+| `elegans-nails` | ElegansNails — sucursal Vicente Guerrero | ✅ Activo, con panel de WiFi (falta subir logo real) |
+| `elegans-nails-parian` | ElegansNails — sucursal El Parián | ✅ Activo, con panel de WiFi (falta `googleReviewUrl` real) |
 
 ---
 
 ## Próximos pasos técnicos
 
 1. Subir logo real de ElegansNails (sigue con placeholder).
-2. Confirmar dominio final (`aura-dre.pages.dev` vs. dominio propio) antes de grabar chips NFC
+2. Completar el `googleReviewUrl` real de la sucursal Parián.
+3. Confirmar dominio final (`aura-dre.pages.dev` vs. dominio propio) antes de grabar chips NFC
    o imprimir QRs en producción.
-3. Escalar a nuevos clientes usando el protocolo de creación de este documento.
+4. Escalar a nuevos clientes usando el protocolo de creación de este documento.
+5. Mandar a fabricar/grabar físicamente el lote de 20 tarjetas del pool Básico (ver "Pieza 4") —
+   por ahora solo existen como códigos en `data/redirects.json`, ninguna tarjeta física está
+   grabada todavía.
+
+---
+
+## Bitácora de sesiones
+
+- **2026-08-11** — Se agregó el panel de "Conéctate a WiFi" al hub (ver "Pieza 3"): librería QR
+  vendorizada en `functions/_shared/qrcode-gen.js`, soporte de botón tipo `wifi` en
+  `renderHub.js`, e ícono `wifi` en `icons.js`. Activado en ambas sucursales de ElegansNails
+  (`elegans-nails.json` y `elegans-nails-parian.json`), cada una con su propia red y su propia
+  imagen de QR provista por Alfredo (`assets/elegans-nails/wifi-qr.jpg.png` para Vicente,
+  `assets/elegans-nails/wifi-qr-parian.png.png` para Parián — ambas comparten la misma carpeta
+  de assets, no hay carpeta separada por sucursal). Ya está en `master` y desplegado.
+- **2026-08-11** — Se agregó el pool de tarjetas Básico pre-fabricadas (ver "Pieza 4"): nuevo tipo
+  `{ "type": "pending" }` en el router (`functions/r/[slug].js`) y página `pendiente.html` para
+  códigos aún no vendidos. Se generaron y cargaron 20 slugs `rv-xxxx` en `data/redirects.json`.
+  Objetivo: cerrar ventas de Básico en frío sin esperar a fabricar un QR por cliente — Alfredo
+  solo reasigna un código ya existente al `googleReviewUrl` del negocio y hace push. Probado
+  localmente con `wrangler pages dev` (router, hub y página pendiente respondiendo correcto).
+  Falta fabricar/grabar las tarjetas físicas correspondientes a esos 20 códigos — ver "Próximos
+  pasos técnicos".
+- **2026-08-27** — Rebranding de RAVE a **TapGo** (nombre visible al cliente). Alfredo ya creó la
+  cuenta de Instagram de la marca (`@tapgo_mx`). Se actualizó el copy en `index.html` (título,
+  meta tags, wordmark del hero, textos de los botones de WhatsApp, footer), `pendiente.html`
+  (título, wordmark, texto de la tarjeta no activada), `functions/stats/[slug].js` (título y
+  wordmark del dashboard), `functions/_shared/renderHub.js` (footer "Hecho by TapGo" en cada
+  hub) y el comentario de licencia en `functions/_shared/qrcode-gen.js`. La infraestructura
+  técnica (repo `Mamerto444/AURA`, proyecto Cloudflare `aura`, dominio `aura-dre.pages.dev`) se
+  mantiene sin cambios, mismo criterio que en rebrands anteriores (ver nota de marca al inicio de
+  este documento). Pendiente: subir el nuevo link/handle de Instagram donde aplique en la landing
+  si Alfredo lo pide, y revisar si algún `businesses/*.json` menciona "RAVE" en texto libre.

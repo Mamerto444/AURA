@@ -30,6 +30,8 @@ export async function onRequestGet(context) {
 
   const destination = entry.type === 'hub'
     ? new URL(`/hub/${params.slug}`, request.url).toString()
+    : entry.type === 'pending'
+    ? new URL('/pendiente.html', request.url).toString()
     : entry.url;
 
   return Response.redirect(destination, 302);
