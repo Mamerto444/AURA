@@ -13,7 +13,7 @@
 // DENSO WAVE INCORPORATED
 //  http://www.denso-wave.com/qrcode/faqpatent-e.html
 //
-// Vendored as an ES module for use in the RAVE hub's WiFi panel
+// Vendored as an ES module for use in the TapGo hub's WiFi panel
 // (server-side rendering of a QR SVG, no client-side JS or third-party
 // network calls needed).
 //---------------------------------------------------------------------

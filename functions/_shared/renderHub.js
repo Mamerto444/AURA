@@ -395,7 +395,7 @@ document.querySelectorAll('.wifi-copy-btn').forEach(function (btn) {
   <div class="buttons">
     ${buttonsHtml}
   </div>
-  <footer><a href="/" target="_blank" rel="noopener">Hecho by RAVE</a></footer>
+  <footer><a href="/" target="_blank" rel="noopener">Hecho by TapGo</a></footer>
 </main>${wifiScript}
 </body>
 </html>`;
