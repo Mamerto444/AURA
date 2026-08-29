@@ -45,6 +45,10 @@ function renderStats(slug, s) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TapGo Stats — ${slug}</title>
+<link rel="icon" type="image/x-icon" href="/assets/tapgo/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/tapgo/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/tapgo/favicon-192.png">
+<link rel="apple-touch-icon" href="/assets/tapgo/apple-touch-icon.png">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #0a0a0c; color: #f5f5f7; font-family: system-ui, sans-serif; padding: 28px 16px 48px; max-width: 520px; margin: 0 auto; }
