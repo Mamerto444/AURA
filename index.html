@@ -647,7 +647,7 @@
     <p class="proof">Toca la tarjeta de un cliente real más abajo <strong>ahora mismo</strong>, sin capturas de pantalla.</p>
     <div class="proof-bar">
       <div class="proof-item">
-        <div class="proof-number" data-count-to="2">2</div>
+        <div class="proof-number" data-count-to="10" data-suffix="+">10+</div>
         <div class="proof-label">Negocios activos</div>
       </div>
       <div class="proof-item">
@@ -939,12 +939,13 @@
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
         var target = parseInt(entry.target.getAttribute('data-count-to'), 10);
+        var suffix = entry.target.getAttribute('data-suffix') || '';
         var start = performance.now();
         var dur = 700;
         entry.target.textContent = '0';
         function tick(now) {
           var p = Math.min((now - start) / dur, 1);
-          entry.target.textContent = Math.round(p * target);
+          entry.target.textContent = Math.round(p * target) + (p >= 1 ? suffix : '');
           if (p < 1) requestAnimationFrame(tick);
         }
         requestAnimationFrame(tick);
