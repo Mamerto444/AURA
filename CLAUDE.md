@@ -1,5 +1,13 @@
 # Proyecto: Sistema NFC para negocios (TapGo)
 
+**⚠️ CONGELADO PARA CLIENTES NUEVOS (desde 2026-09-05).** Este proyecto ("aura") ya no recibe
+negocios nuevos — se queda solo con los clientes que ya tenía (ver tabla "Negocios activos" más
+abajo). Todo cliente nuevo a partir de El Surtidor del Tapicero se crea en el sitio nuevo,
+carpeta `d:\CLAUDE\TAPGO`, repo/proyecto Cloudflare `tapgo` (ver su propio `CLAUDE.md`). Razón:
+decisión de Alfredo de arrancar limpio bajo el nombre TapGo sin arrastrar el historial de
+renombres ni el desfase entre nombre técnico del repo y marca visible. Este repo sigue vivo y se
+sigue manteniendo (bugs, cambios a clientes existentes), solo no crece con negocios nuevos.
+
 **Nota de marca:** el nombre visible al cliente es **TapGo** (antes RAVE, antes de eso AURA,
 antes de eso FlowPages). La infraestructura técnica (repo GitHub `Mamerto444/AURA`, proyecto
 Cloudflare Pages `aura`, dominio `aura-dre.pages.dev`) sigue usando "aura" internamente — no se
@@ -55,8 +63,9 @@ Ya construido y probado localmente (`npx wrangler pages dev .` en puerto 8788):
   porque cada slug lee su propio JSON.
 - **Repo conectado a GitHub** (`github.com/Mamerto444/AURA`) y **desplegado en Cloudflare
   Pages**: `https://aura-dre.pages.dev`. El nombre del proyecto en `wrangler.toml` es `aura`.
-- **Pool de códigos genéricos para Básico** (agregado 2026-08-11 — ver "Pieza 4" más abajo): 20
-  slugs pre-generados tipo `rv-xxxx` en `data/redirects.json`, todos con `{ "type": "pending" }`,
+- **Pool de códigos genéricos para Básico** (agregado 2026-08-11, **movido al proyecto `tapgo`
+  el 2026-09-05** — ya no vive en este repo, ver nota de congelamiento al inicio del documento):
+  20 slugs pre-generados tipo `rv-xxxx`, todos con `{ "type": "pending" }`,
   pensados para grabarse en tarjetas físicas en lote *antes* de tener cliente. Mientras un código
   no se asigna, `/r/[código]` manda a `pendiente.html` (landing "tarjeta aún no activada" con CTA
   de WhatsApp). Activar un código = cambiar su entrada a `{ "type": "direct", "url": "..." }` con
@@ -424,12 +433,8 @@ pago único, para bajar la fricción de la primera venta.
 
 1. Subir logo real de ElegansNails (sigue con placeholder).
 2. Completar el `googleReviewUrl` real de la sucursal Parián.
-3. Confirmar dominio final (`aura-dre.pages.dev` vs. dominio propio) antes de grabar chips NFC
-   o imprimir QRs en producción.
-4. Escalar a nuevos clientes usando el protocolo de creación de este documento.
-5. Mandar a fabricar/grabar físicamente el lote de 20 tarjetas del pool Básico (ver "Pieza 4") —
-   por ahora solo existen como códigos en `data/redirects.json`, ninguna tarjeta física está
-   grabada todavía.
+3. Este proyecto ya no recibe clientes nuevos (ver nota de congelamiento al inicio) — el pool de
+   tarjetas Básico y el protocolo de creación de negocios se usan ahora en el proyecto `tapgo`.
 
 ---
 
@@ -460,3 +465,13 @@ pago único, para bajar la fricción de la primera venta.
   mantiene sin cambios, mismo criterio que en rebrands anteriores (ver nota de marca al inicio de
   este documento). Pendiente: subir el nuevo link/handle de Instagram donde aplique en la landing
   si Alfredo lo pide, y revisar si algún `businesses/*.json` menciona "RAVE" en texto libre.
+- **2026-09-05** — Alfredo decidió arrancar un sitio nuevo (`d:\CLAUDE\TAPGO`, proyecto/repo
+  `tapgo`) para todo cliente a partir de El Surtidor del Tapicero, dejando este proyecto ("aura")
+  congelado con los clientes que ya tenía (ver nota al inicio del documento). Se movieron al sitio
+  nuevo: el JSON de El Surtidor del Tapicero (nunca llegó a hacer commit aquí, se creó y se movió
+  en la misma sesión) y el pool completo de 20 códigos `rv-xxxx` del paquete Básico (ninguno
+  estaba grabado en tarjeta física, así que no había URL viva que se rompiera). El repo de GitHub
+  y el proyecto de Cloudflare Pages para `tapgo` todavía no existen — falta que Alfredo los cree
+  manualmente (wrangler y gh no están autenticados en esta máquina) — y falta que compre el
+  dominio propio, que planea hacer a partir de su siguiente cliente. Ver `CLAUDE.md` del proyecto
+  `tapgo` para el detalle completo.
