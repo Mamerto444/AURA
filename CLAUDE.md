@@ -404,14 +404,19 @@ regla de proceso interno, no una limitación técnica.
 
 ## Empaquetado y precios (vigente — reflejado en `index.html`)
 
-1. **Básico — $400 MXN pago único**: tarjeta NFC física + redirect directo a reseñas de Google
-   (sin hub). Usa el mismo router que Pro por dentro (ver "Pieza 4"), pero al cliente se le vende
-   como destino fijo, sin panel de actualización.
-2. **Pro — $800 MXN pago único**: router propio (destino actualizable sin comprar otra tarjeta) +
-   landing hub con fotos/galería + WhatsApp/redes + funnel inteligente de reseñas + contador de
-   escaneos.
+1. **Básico — $400 MXN pago único** (mayoreo desde 5 tarjetas: **$200 c/u**): tarjeta NFC física +
+   redirect directo a reseñas de Google (sin hub). Usa el mismo router que Personalizado por
+   dentro (ver "Pieza 4"), pero al cliente se le vende como destino fijo, sin panel de
+   actualización.
+2. **Personalizado — $700 MXN pago único** (antes "Pro", $800 — renombrado y bajado de precio el
+   2026-09-15; mayoreo desde 5 tarjetas: **$500 c/u**, propuesto manteniendo el mismo descuento
+   plano de $200/tarjeta que Básico, pendiente de que Alfredo lo confirme): router propio (destino
+   actualizable sin comprar otra tarjeta) + landing hub con fotos/galería + WhatsApp/redes +
+   funnel inteligente de reseñas + contador de escaneos.
 
-Descuento por volumen (reflejado en `index.html`): 2 tarjetas $700 c/u, 5+ tarjetas $600 c/u.
+Se quitó el escalón intermedio de "2 tarjetas" que existía antes — ahora solo hay precio de
+menudeo (1 tarjeta) y de mayoreo (5+) por paquete, reflejado en el bloque de volumen de
+`index.html` (`.volume-groups`, uno por paquete).
 
 Se descartó el tercer nivel "Premium" con retainer mensual — por ahora solo 2 paquetes, ambos de
 pago único, para bajar la fricción de la primera venta.
@@ -475,3 +480,12 @@ pago único, para bajar la fricción de la primera venta.
   manualmente (wrangler y gh no están autenticados en esta máquina) — y falta que compre el
   dominio propio, que planea hacer a partir de su siguiente cliente. Ver `CLAUDE.md` del proyecto
   `tapgo` para el detalle completo.
+- **2026-09-15** — Se actualizaron precios en `index.html`: Básico se queda en $400 (mayoreo 5+ a
+  $200 c/u, antes sin escalón de mayoreo), y el paquete antes llamado "Pro" ($800) se renombró a
+  **Personalizado** y bajó a $700 (mayoreo 5+ a $500 c/u — número propuesto por Claude aplicando
+  el mismo descuento plano de $200/tarjeta que Básico, ya que Alfredo aún no tenía ese precio
+  definido; confirmar o ajustar). Se quitó el escalón intermedio de "2 tarjetas" que existía antes
+  en el bloque de volumen. Cambios reflejados en las tarjetas de precio, el bloque de volumen
+  (ahora con un grupo por paquete), los CTAs de WhatsApp, las etiquetas "Pro" de la galería de
+  tarjetas (ahora "Personalizado") y las respuestas del FAQ que mencionaban "Pro". Probado
+  localmente con `wrangler pages dev` antes de subir.
